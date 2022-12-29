@@ -1,0 +1,78 @@
+import { Box, Button, Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { useState } from "react";
+
+const StyledLogin = styled("div")`
+
+`;
+
+const StyledDialog = styled('div')`
+  .input {
+      margin-top: 30px;
+  }
+
+  .btn {
+      margin-top: 30px;
+      width: 100%;
+  }
+
+  .menu-link {
+    &:hover {
+      color: ${props => props.theme.palette.secondary.main};
+    }
+  }
+`;
+
+const Login = () => {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleLogin = () => {};
+
+  return (
+    <StyledLogin className="Login">
+      <Button className="menu-link" onClick={handleClickOpen}>Login</Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Login</DialogTitle>
+        <DialogContent>
+          <StyledDialog className="form-login">
+            <TextField
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input first"
+              label="Username"
+              variant="outlined"
+              type="text"
+              fullWidth
+              autoComplete="off"
+            />
+            <TextField
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input"
+              label="Password"
+              variant="outlined"
+              type="password"
+              fullWidth
+              autoComplete="off"
+            />
+            <Button onClick={handleLogin} className="btn" variant="contained" size="large">
+              Login
+            </Button>
+          </StyledDialog>
+        </DialogContent>
+      </Dialog>
+    </StyledLogin>
+  );
+};
+
+export default Login;
