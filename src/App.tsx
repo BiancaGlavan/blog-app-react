@@ -2,10 +2,11 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/navigation/Navigation";
-import ArticlesPage from "./components/pages/ArticlesPage";
-import CategoriesPage from "./components/pages/CategoriesPage";
-import EditorPage from "./components/pages/EditorPage";
-import Homepage from "./components/pages/Homepage";
+import ArticlesPage from "./pages/ArticlesPage";
+import CategoriesPage from "./pages/CategoriesPage";
+import EditorPage from "./pages/EditorPage";
+import Homepage from "./pages/Homepage";
+import ProfilePage from "./pages/ProfilePage";
 import blogTheme from "./theme/blogTheme";
 
 
@@ -22,6 +23,7 @@ function App() {
       <Route path='/articles' element={<ArticlesPage />} />
       <Route path='/categories' element={<CategoriesPage />} />
       <Route path='/editor' element={<EditorPage />} />
+      <Route path='/profile' element={<ProfilePage />} />
       </Routes>
     </div>
     </ThemeProvider>

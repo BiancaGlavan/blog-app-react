@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRegisterUserMutation } from "../../redux/features/apiSlice";
 
 const StyledRegister = styled("div")`
   
@@ -23,7 +24,18 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [open, setOpen] = useState(false);
 
-  const handleRegister = () => {};
+  const [registerUser, response] = useRegisterUserMutation();
+  const { isLoading, isSuccess } = response;
+
+  const handleRegister = () => {
+    const user = {
+      name: username,
+      email: email,
+      password: password,
+    };
+
+    registerUser({ data: user });
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,6 +44,12 @@ const Register = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+
+    console.log('response useeffect: ', response);
+  }, [response]);
+
 
   return (
     <StyledRegister className="Register">

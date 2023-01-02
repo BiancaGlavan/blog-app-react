@@ -1,12 +1,16 @@
 import { useTheme, useMediaQuery, IconButton, Drawer, Typography, Container, Box, Tooltip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarNav from "./SidebarNav";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from "@mui/icons-material/Create";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { logout, setUser } from "../../redux/features/authSlice";
+import UserDropdown from "./Userdropdown";
+import { useGetMyProfileQuery } from "../../redux/features/apiSlice";
 
 const StyledNavigation = styled(Container)`
   display: flex;
@@ -22,7 +26,7 @@ const StyledNavigation = styled(Container)`
 
     .menu-link {
       &:hover {
-        color: ${props => props.theme.palette.secondary.main};
+        color: ${(props) => props.theme.palette.secondary.main};
       }
     }
   }
@@ -33,10 +37,31 @@ const Navigation = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const authState = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const { data: userProfile, isSuccess } = useGetMyProfileQuery({}, { skip: !authState.isAuth });
+
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  useEffect(() => {
+    if (userProfile && userProfile.profile) {
+      dispatch(setUser(userProfile.profile));
+
+    console.log('userProfile', userProfile);
+    }
+  }, [userProfile]);
+  
   return (
     <StyledNavigation>
       {isMobile && (
@@ -53,15 +78,24 @@ const Navigation = () => {
         {!isMobile && (
           <>
             <Link to={"/articles"}>
-              <Typography className="menu-link" variant="subtitle1">Articles</Typography>
+              <Typography className="menu-link" variant="subtitle1">
+                Articles
+              </Typography>
             </Link>
             <Link to={"/categories"}>
-              <Typography className="menu-link" variant="subtitle1">Categories</Typography>
+              <Typography className="menu-link" variant="subtitle1">
+                Categories
+              </Typography>
             </Link>
-            <Login />
-            <Register />
+            {!authState.isAuth && (
+              <>
+                <Login />
+                <Register />
+              </>
+            )}
           </>
         )}
+        {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout} />}
         <Link to={"/editor"}>
           <Tooltip title="Write">
             <IconButton>
