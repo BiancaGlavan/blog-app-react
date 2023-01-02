@@ -3,19 +3,57 @@ import { RootState } from "../store";
 import { IUser } from "./authSlice";
 
 interface ICreateArticleResponse {
-
+  article: IArticle[];
 }
 
-interface IArticle {
+export interface IArticle {
+  id?: string;
+  _id?: string;
+  title: string;
+  description: string;
+  image?: string;
+  imageThumb?: string;
+  user: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  tags: string[];
+  category: {
+    _id?: string;
+    title: string;
+  };
+  likes: string[];
+}
 
+interface IArticlesResponse {
+  articles: IArticle[];
+  totalPages: number;
+  currentPage: number;
 }
 
 interface ILoginResponse {
-    access_token: string;
+  access_token: string;
 }
 
 interface IMyProfileResponse {
-    profile: IUser;
+  profile: IUser;
+}
+
+interface ICategory {
+  id?: string;
+  _id?: string;
+  title: string;
+  image?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  articles: string[];
+}
+
+interface IArticlePayload {
+    category: string;
+    _id?: string;
+    title: string;
+    image?: string;
+    description: string;
 }
 
 export const backendApi = createApi({
@@ -33,7 +71,7 @@ export const backendApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    createArticle: builder.mutation<ICreateArticleResponse, { article: Partial<IArticle> }>({
+    createArticle: builder.mutation<ICreateArticleResponse, { article: IArticlePayload }>({
       query({ article }) {
         return {
           url: `articles`,
@@ -43,29 +81,45 @@ export const backendApi = createApi({
       },
     }),
     loginUser: builder.mutation<ILoginResponse, { data: Partial<IUser> }>({
-        query: ({ data }) => ({
-          url: "auth/login",
-          method: "POST",
-          body: data,
-        }),
+      query: ({ data }) => ({
+        url: "auth/login",
+        method: "POST",
+        body: data,
       }),
-      registerUser: builder.mutation<IUser, { data: Partial<IUser> }>({
-        query: ({ data }) => ({
-          url: "auth/register",
-          method: "POST",
-          body: data,
-        }),
+    }),
+    registerUser: builder.mutation<IUser, { data: Partial<IUser> }>({
+      query: ({ data }) => ({
+        url: "auth/register",
+        method: "POST",
+        body: data,
       }),
-      getMyProfile: builder.query<IMyProfileResponse, {}>({
-        query: () => "auth/profile",
+    }),
+    getMyProfile: builder.query<IMyProfileResponse, {}>({
+      query: () => "auth/profile",
+    }),
+    getCategories: builder.query<ICategory[], void>({
+      query: () => "categories",
+    }),
+    getArticles: builder.query<IArticlesResponse, void>({
+      query: () => "articles",
+    }),
+    uploadImage: builder.mutation<string, FormData>({
+      query: (data) => ({
+        url: "upload",
+        method: "POST",
+        body: data,
       }),
+    }),
   }),
 });
 export const {
-    useCreateArticleMutation,
-    useLoginUserMutation,
-    useRegisterUserMutation,
-    useGetMyProfileQuery,
+  useCreateArticleMutation,
+  useLoginUserMutation,
+  useRegisterUserMutation,
+  useGetMyProfileQuery,
+  useGetCategoriesQuery,
+  useUploadImageMutation,
+  useGetArticlesQuery,
 } = backendApi;
 
 export default backendApi;

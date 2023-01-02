@@ -25,7 +25,7 @@ const UserDropdown = ({ user, handleLogout }: IPropsUserDropdown) => {
         <Avatar
           sx={{ width: 30, height: 30 }}
           alt="My profile"
-          src="https://images.unsplash.com/photo-1670718089430-d75ba6c1a194?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+          src={user?.image ? `https://eager-dog-tie.cyclic.app/api/images/${user.image}` : user?.name}
         />
       </IconButton>
       <Menu

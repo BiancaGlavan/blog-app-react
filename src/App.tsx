@@ -9,25 +9,22 @@ import Homepage from "./pages/Homepage";
 import ProfilePage from "./pages/ProfilePage";
 import blogTheme from "./theme/blogTheme";
 
-
 function App() {
-  
-
   return (
     <ThemeProvider theme={blogTheme}>
-    <CssBaseline />
-    <div className="App">
-      <Navigation />
-      <Routes>
-      <Route path='/' element={<Homepage />} />
-      <Route path='/articles' element={<ArticlesPage />} />
-      <Route path='/categories' element={<CategoriesPage />} />
-      <Route path='/editor' element={<EditorPage />} />
-      <Route path='/profile' element={<ProfilePage />} />
-      </Routes>
-    </div>
+      <CssBaseline />
+      <div className="App">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/editor" element={<EditorPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+      </div>
     </ThemeProvider>
-  )
+  );
 }
 
 export default App;

@@ -47,19 +47,12 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log("login: ", loginResponse);
 
     if (isSuccess) {
       dispatch(login(loginResponse.access_token));
       navigate("/");
     }
   }, [isSuccess, loginResponse]);
-
-  useEffect(() => {
-    if (authState.isAuth) {
-      navigate("/");
-    }
-  }, [authState]);
 
   const handleClickOpen = () => {
     setOpen(true);

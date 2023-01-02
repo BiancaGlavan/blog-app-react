@@ -45,12 +45,6 @@ const Register = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-
-    console.log('response useeffect: ', response);
-  }, [response]);
-
-
   return (
     <StyledRegister className="Register">
       <Button className="menu-link" variant="outlined" onClick={handleClickOpen}>Register</Button>

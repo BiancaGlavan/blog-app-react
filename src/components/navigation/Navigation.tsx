@@ -96,13 +96,13 @@ const Navigation = () => {
           </>
         )}
         {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout} />}
-        <Link to={"/editor"}>
+        {authState.isAuth && authState.user && <Link to={"/editor"}>
           <Tooltip title="Write">
             <IconButton>
               <CreateIcon />
             </IconButton>
           </Tooltip>
-        </Link>
+        </Link>}
       </Box>
       <Drawer
         variant="temporary"
