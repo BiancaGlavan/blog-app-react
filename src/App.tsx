@@ -7,6 +7,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import EditorPage from "./pages/EditorPage";
 import Homepage from "./pages/Homepage";
 import ProfilePage from "./pages/ProfilePage";
+import SingleArticlePage from "./pages/SingleArticlePage";
 import blogTheme from "./theme/blogTheme";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/editor" element={<EditorPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/articles/:id" element={<SingleArticlePage />} />
         </Routes>
       </div>
     </ThemeProvider>
