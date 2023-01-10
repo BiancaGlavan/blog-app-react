@@ -21,7 +21,7 @@ const StyledArticle = styled("div")`
 
   .article-img {
     width: 100%;
-    max-height: 250px;
+    height: 250px;
     object-fit: cover;
     margin-bottom: 20px;
   }
@@ -55,7 +55,7 @@ const Article = ({ article }: IPropsArticle) => {
         </Typography>
 
         <Link to={`/articles/${article._id}`}>
-        <Typography className="article-title"  gutterBottom variant="h5" component="div">
+        <Typography className="article-title"  gutterBottom variant="h6" component="div">
           {article.title}
         </Typography>
         </Link>
