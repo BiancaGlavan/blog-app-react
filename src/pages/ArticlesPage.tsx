@@ -3,7 +3,9 @@ import { styled } from "@mui/material/styles";
 import ArticlesList from "../components/article/ArticlesList";
 import { useGetArticlesQuery } from "../redux/features/apiSlice";
 
-const StyledArticlePage = styled(Container)``;
+const StyledArticlePage = styled(Container)`
+margin-top: 50px;
+`;
 
 
 const ArticlesPage = () => {
