@@ -13,7 +13,11 @@ export interface IArticle {
   description: string;
   image?: string;
   imageThumb?: string;
-  user: string;
+  user: {
+    _id?: string;
+    name: string;
+    subscribers: number;
+  }
   createdAt?: Date;
   updatedAt?: Date;
   tags: string[];
