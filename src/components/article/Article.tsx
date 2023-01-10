@@ -3,15 +3,12 @@ import { styled } from "@mui/material/styles";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { IArticle } from "../../redux/features/apiSlice";
 import { baseURL } from "../../utils/config";
-import parse from "html-react-parser";
+import { Link } from "react-router-dom";
 
 interface IPropsArticle {
   article: IArticle;
 }
 
-// ${props => props.theme.breakpoints.down("sm")} {
-
-// }
 
 const StyledArticle = styled("div")`
   margin-bottom: 30px;
@@ -24,7 +21,7 @@ const StyledArticle = styled("div")`
 
   .article-img {
     width: 100%;
-    height: 250px;
+    max-height: 250px;
     object-fit: cover;
     margin-bottom: 20px;
   }
@@ -57,12 +54,12 @@ const Article = ({ article }: IPropsArticle) => {
           {article.category.title}
         </Typography>
 
+        <Link to={`/articles/${article._id}`}>
         <Typography className="article-title"  gutterBottom variant="h5" component="div">
           {article.title}
         </Typography>
-        {/* <Typography variant="body2" color="text.secondary" className="truncate">
-          {parse(article.description)}
-        </Typography> */}
+        </Link>
+        
         <Typography className="article-cat" variant="subtitle2" color="text.secondary">
           by {article.user.name}
         </Typography>
