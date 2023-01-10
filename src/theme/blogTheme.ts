@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 const blogTheme = createTheme({
     palette: {
         background: {
-            default: "#f3f0ec"
+            default: "#fcfcfc"
         },
         text :{
             primary: "#503629",
@@ -17,7 +17,7 @@ const blogTheme = createTheme({
         }
     },
     typography : {
-        fontFamily: "Petrona",
+        fontFamily: "Poppins",
     }
 });
 
