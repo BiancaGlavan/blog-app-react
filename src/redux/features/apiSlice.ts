@@ -107,6 +107,12 @@ export const backendApi = createApi({
     getArticles: builder.query<IArticlesResponse, void>({
       query: () => "articles",
     }),
+    getArticleById: builder.query<IArticle, number | string>({
+      query: (articleId: number | string) => `articles/${articleId}`,
+    }), 
+    getCategoryArticles: builder.query<IArticlesResponse, number | string>({
+      query: (categoryId: number | string) => `categories/${categoryId}/articles`
+    }),
     uploadImage: builder.mutation<string, FormData>({
       query: (data) => ({
         url: "upload",
@@ -124,6 +130,8 @@ export const {
   useGetCategoriesQuery,
   useUploadImageMutation,
   useGetArticlesQuery,
+  useGetArticleByIdQuery,
+  useGetCategoryArticlesQuery,
 } = backendApi;
 
 export default backendApi;
