@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useRegisterUserMutation } from "../../redux/features/apiSlice";
 
 const StyledRegister = styled("div")`
-  
+  .menu-link {
+    border-radius: 0;
+  }
 `;
 
 const StyledDialog = styled('div')`
