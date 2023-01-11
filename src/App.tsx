@@ -1,6 +1,7 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { Route, Routes } from "react-router-dom";
+import Footer from "./components/Footer";
 import Navigation from "./components/navigation/Navigation";
 import ArticlesPage from "./pages/ArticlesPage";
 import CategoriesPage from "./pages/CategoriesPage";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/articles/:id" element={<SingleArticlePage />} />
         </Routes>
+        <Footer />
       </div>
     </ThemeProvider>
   );
