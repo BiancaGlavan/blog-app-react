@@ -1,67 +1,103 @@
-import { Box, Card, CardActions, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { IArticle } from "../../redux/features/apiSlice";
+import classNames from "classnames";
 import { baseURL } from "../../utils/config";
+import { Box, Typography } from "@mui/material";
+import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 
 interface IPropsArticle {
   article: IArticle;
+  isRow?: boolean;
 }
 
-
 const StyledArticle = styled("div")`
-  margin-bottom: 30px;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
 
-  .article-card {
-    max-width: 348px;
-    display: flex;
-    flex-direction: column;
+  &.isRow {
+    flex-direction: row;
+    height: 300px;
   }
 
   .article-img {
     width: 100%;
-    height: 250px;
+    height: 200px;
     object-fit: cover;
-    margin-bottom: 20px;
+
+    &.isRow {
+      width: 250px;
+      height: 300px;
+    }
   }
 
-  .truncate {
-    max-width: 100%;
-    white-space: nowrap;
+  .article-content {
+    padding: 20px;
+    height: 240px;
+
+    &.isRow {
+      width: 300px;
+    }
+
+    .article-title {
+      cursor: pointer;
+      &:hover {
+        color: ${(props) => props.theme.palette.primary.main};
+      }
+    }
+  }
+
+  .article-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .user {
+      text-transform: uppercase;
+    }
+  }
+
+  .article-desc {
+    margin-top: 10px;
     overflow: hidden;
+    line-height: 1.5rem;
+    max-height: 6rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
     text-overflow: ellipsis;
-    text-align: center;
-  }
+    -webkit-line-clamp: 3;
 
-  .article-cat {
-    text-transform: uppercase;
-    text-align: center;
-  }
-
-  .article-title {
-    text-align: center;
+    ${(props) => props.theme.breakpoints.down("sm")} {
+      -webkit-line-clamp: 2;
+    }
   }
 `;
 
-const Article = ({ article }: IPropsArticle) => {
+const Article = ({ article, isRow = false }: IPropsArticle) => {
   return (
-    <StyledArticle className="Article">
-      <Box className="article-card">
-        <img className="article-img" src={article.image ? baseURL + article.image : "./default-thumbnail.jpg"} />
-
-        <Typography className="article-cat" variant="subtitle2" color="text.secondary">
-          {article.category.title}
-        </Typography>
-
+    <StyledArticle className={classNames("Article", { isRow: isRow })}>
+      <Link to={`/articles/${article._id}`}>
+        <img className={classNames("article-img", { isRow: isRow })} src={article.image ? baseURL + article.image : "./default-thumbnail.jpg"} />
+      </Link>
+      <Box className={classNames("article-content", { isRow: isRow })}>
+        <Box className="article-details">
+          <Typography className="user" variant="caption">
+            by {article.user.name}
+          </Typography>
+          <Typography variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
+          <Typography variant="caption">{article.category.title}</Typography>
+        </Box>
         <Link to={`/articles/${article._id}`}>
-        <Typography className="article-title"  gutterBottom variant="h6" component="div">
-          {article.title}
-        </Typography>
+          <Typography className="article-title" variant="h6">
+            {article.title}
+          </Typography>
         </Link>
-        
-        <Typography className="article-cat" variant="subtitle2" color="text.secondary">
-          by {article.user.name}
+        <Typography className="article-desc" variant="body1">
+          {parse(article?.description)}
         </Typography>
       </Box>
     </StyledArticle>
