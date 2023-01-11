@@ -18,7 +18,7 @@ export interface IArticle {
     name: string;
     subscribers: number;
   }
-  createdAt?: Date;
+  createdAt?: string;
   updatedAt?: Date;
   tags: string[];
   category: {

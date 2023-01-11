@@ -3,17 +3,18 @@ import { createTheme } from "@mui/material/styles";
 const blogTheme = createTheme({
     palette: {
         background: {
-            default: "#fcfcfc"
+            default: "#fff",
+            paper: "#FAE7D5"
         },
         text :{
-            primary: "#503629",
+            primary: "#000000",
             
         },
         primary: {
-            main: "#503629",
+            main: "#BB5A3A",
         },
         secondary: {
-            main: "#ce9d4c"
+            main: "#BB5A3A"
         }
     },
     typography : {
