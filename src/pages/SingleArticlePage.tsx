@@ -28,7 +28,7 @@ const SingleArticlePage = () => {
               <Typography variant="h6">{article?.title && article?.title}</Typography>
               <Typography variant="caption">Article created by {article?.user.name} | </Typography>
               <Typography variant="caption">Category: {article?.category.title}</Typography>
-              <Typography>{article?.description && parse(article?.description)}</Typography>
+              <Typography>{parse(article?.description)}</Typography>
             </>
           )}
         </Grid>
