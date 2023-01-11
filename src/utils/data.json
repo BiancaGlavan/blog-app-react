@@ -1,0 +1,39 @@
+[
+    {
+        "img": "./images/grid-cosy.jpg",
+        "title": "cosy",
+        "author": "@keepThePotBoiling",
+        "rows": 2,
+        "cols": 2
+    },
+    {
+        "img": "./images/grid-food.jpg",
+        "title": "food",
+        "author": "@keepThePotBoiling"
+    },
+    {
+        "img": "./images/grid-fun.jpg",
+        "title": "having fun",
+        "author": "@keepThePotBoiling"
+    },
+    {
+        "img": "./images/grid-home.jpg",
+        "title": "home",
+        "author": "@keepThePotBoiling",
+        "cols": 2
+    },
+    {
+        "img": "./images/grid-music.jpg",
+        "title": "music",
+        "author": "@keepThePotBoiling",
+        "cols": 2
+    },
+    {
+        
+        "img": "./images/grid-photo.jpg",
+        "title": "photo",
+        "author": "@keepThePotBoiling",
+        "rows": 2,
+        "cols": 2
+    }
+]
