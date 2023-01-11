@@ -6,9 +6,18 @@ import { useLoginUserMutation } from "../../redux/features/apiSlice";
 import { login } from "../../redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
-const StyledLogin = styled("div")``;
+const StyledLogin = styled("div")`
+  .login-btn {
+    color: ${(props) => props.theme.palette.text.primary};
+
+    &:hover {
+      color: ${(props) => props.theme.palette.primary.main};
+    }
+  }
+`;
 
 const StyledDialog = styled("div")`
+
   .input {
     margin-top: 30px;
   }
@@ -18,11 +27,6 @@ const StyledDialog = styled("div")`
     width: 100%;
   }
 
-  .menu-link {
-    &:hover {
-      color: ${(props) => props.theme.palette.secondary.main};
-    }
-  }
 `;
 
 const Login = () => {
@@ -64,7 +68,7 @@ const Login = () => {
 
   return (
     <StyledLogin className="Login">
-      <Button className="menu-link" onClick={handleClickOpen}>
+      <Button className="login-btn" onClick={handleClickOpen}>
         Login
       </Button>
       <Dialog open={open} onClose={handleClose}>
