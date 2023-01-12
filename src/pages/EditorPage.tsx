@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState, useEffect } from "react";
@@ -6,21 +6,26 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useCreateArticleMutation, useGetCategoriesQuery, useUploadImageMutation } from "../redux/features/apiSlice";
 import ImageDropzone from "../components/ImageDropzone";
+import ImageUnsplash from "../components/ImageUnsplash";
 
 const StyledEditor = styled(Container)`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  margin-top: 80px;
 
-  .editor-input {
-    height: 250px;
+  .create-article {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
 
-  .btn {
-    margin-top: 30px;
-    margin-bottom: 30px;
+  .editor-input {
+    height: 285px;
+  }
+
+  .btn-create {
+    margin-top: 60px;
     max-width: 300px;
+    border-radius: 0;
   }
 `;
 
@@ -69,29 +74,37 @@ const EditorPage = () => {
     <StyledEditor>
       <Typography variant="h5">Write an article</Typography>
 
-      <FormControl sx={{ width: "300px" }}>
-        <InputLabel>Category</InputLabel>
-        <Select value={category} label="Category" onChange={handleChange}>
-          {categories?.map((category, idx) => (
-            <MenuItem key={category._id} value={category._id}>
-              {category.title}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Grid container spacing={10}>
+        <Grid className="create-article" item xs={12} md={6}>
+          <FormControl sx={{ width: "300px" }}>
+            <InputLabel>Category</InputLabel>
+            <Select value={category} label="Category" onChange={handleChange}>
+              {categories?.map((category, idx) => (
+                <MenuItem key={category._id} value={category._id}>
+                  {category.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-      <TextField
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        label="Title"
-        variant="outlined"
-        type="text"
-      />
+          <TextField
+            fullWidth
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            label="Title"
+            variant="outlined"
+            type="text"
+          />
+          <ReactQuill theme="snow" value={description} onChange={setDescription} className="editor-input" />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ImageUnsplash />
+        </Grid>
+      </Grid>
 
-      <ImageDropzone onChange={setFile} />
+      {/* <ImageDropzone onChange={setFile} /> */}
 
-      <ReactQuill theme="snow" value={description} onChange={setDescription} className="editor-input" />
-      <Button onClick={handleCreateArticle} variant="contained" size="large" className="btn">
+      <Button onClick={handleCreateArticle} variant="contained" size="large" className="btn-create">
         Add article
       </Button>
     </StyledEditor>
