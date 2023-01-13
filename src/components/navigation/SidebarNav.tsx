@@ -7,27 +7,41 @@ import Register from "./Register";
 const StyledSidebarNav = styled("div")`
   padding: 20px;
 
-    .menu-links {
-        margin-top: 50px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+  .menu-links {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .link {
+    &:hover {
+      color: ${(props) => props.theme.palette.primary.main};
     }
+  }
 `;
 
 const SidebarNav = () => {
   return (
     <StyledSidebarNav>
-      <Typography variant="subtitle1">BB</Typography>
+      <Link to={"/"}>
+        <Typography variant="subtitle1" className="link">
+          Keep the Pot Boiling
+        </Typography>
+      </Link>
       <Box className="menu-links">
-      <Link to={"/articles"}>
-        <Typography variant="subtitle1">Articles</Typography>
-      </Link>
-      <Link to={"/categories"}>
-        <Typography variant="subtitle1">Categories</Typography>
-      </Link>
-      <Login />
-      <Register />
+        <Link to={"/articles"}>
+          <Typography className="link" variant="subtitle1">
+            Articles
+          </Typography>
+        </Link>
+        <Link to={"/categories"}>
+          <Typography className="link" variant="subtitle1">
+            Categories
+          </Typography>
+        </Link>
+        <Login />
+        <Register />
       </Box>
     </StyledSidebarNav>
   );

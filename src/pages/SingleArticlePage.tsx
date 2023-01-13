@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import { useGetArticleByIdQuery, useGetCategoryArticlesQuery } from "../redux/features/apiSlice";
@@ -6,7 +6,35 @@ import parse from "html-react-parser";
 import Article from "../components/article/Article";
 
 const StyledSingleArticlePage = styled(Container)`
-margin-top: 80px;
+  margin-top: 80px;
+
+  .single-article-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    margin-bottom: 50px;
+  }
+
+  .single-article-details {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  .single-article-related {
+    margin-bottom: 30px;
+  }
+
+  .single-article-title {
+    font-weight: 600;
+    font-size: 28px;
+  }
+
+  .related-article {
+    margin-bottom: 30px;
+  }
 `;
 
 const SingleArticlePage = () => {
@@ -16,7 +44,7 @@ const SingleArticlePage = () => {
     data: categoryArticles,
     isLoading: categoryArticlesIsLoading,
     isFetching: categoryArticlesIsFetching,
-  } = useGetCategoryArticlesQuery(article?.category._id || "", {skip: !article?.category._id});
+  } = useGetCategoryArticlesQuery(article?.category._id || "", { skip: !article?.category._id });
 
   return (
     <StyledSingleArticlePage>
@@ -24,19 +52,34 @@ const SingleArticlePage = () => {
         <Grid item xs={12} md={9}>
           {!isLoading && !isFetching && article && (
             <>
-              <img src={article?.image} alt="" />
-              <Typography variant="h6">{article?.title && article?.title}</Typography>
-              <Typography variant="caption">Article created by {article?.user.name} | </Typography>
-              <Typography variant="caption">Category: {article?.category.title}</Typography>
-              <Typography>{parse(article?.description)}</Typography>
+              <img className="single-article-img" src={article?.image} />
+              <Typography className="single-article-title" variant="h5">
+                {article?.title && article?.title}
+              </Typography>
+              <Box className="single-article-details">
+                <Typography variant="caption">by {article?.user.name}</Typography>
+                <Typography variant="caption">{article?.category.title}</Typography>
+                <Typography variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
+              </Box>
+              <Typography variant="subtitle1">{parse(article?.description)}</Typography>
             </>
           )}
         </Grid>
 
         <Grid item xs={12} md={3}>
-          <Typography variant="h6">Related articles</Typography>
-          {!categoryArticlesIsLoading && !categoryArticlesIsFetching && categoryArticles &&
-            categoryArticles.articles.map((categArticle) => <Article key={categArticle.id} article={categArticle} />)}
+          {!categoryArticlesIsLoading && categoryArticles && (
+            <Typography className="single-article-related" variant="h6">
+              Related articles
+            </Typography>
+          )}
+          {!categoryArticlesIsLoading &&
+            !categoryArticlesIsFetching &&
+            categoryArticles &&
+            categoryArticles.articles.slice(0, 4).map((categArticle) => (
+              <Box className="related-article">
+                <Article key={categArticle.id} article={categArticle} />
+              </Box>
+            ))}
         </Grid>
       </Grid>
     </StyledSingleArticlePage>

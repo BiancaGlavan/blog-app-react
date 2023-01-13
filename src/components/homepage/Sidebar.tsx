@@ -8,6 +8,13 @@ import InfoIcon from "@mui/icons-material/Info";
 const StyledSidebar = styled("div")`
   background: ${(props) => props.theme.palette.background.paper};
   padding: 60px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  ${(props) => props.theme.breakpoints.down("lg")} {
+    padding: 10px;
+  }
 
   .sidebar-login {
     .text {
@@ -25,13 +32,17 @@ const StyledSidebar = styled("div")`
   }
 
   .sidebar-social-media {
+    display: flex;
+    justify-content: center;
+
     img {
       max-width: 220px;
       height: 200px;
       object-fit: cover;
 
-      ${(props) => props.theme.breakpoints.down("lg")} {
-        height: 200px;
+      ${(props) => props.theme.breakpoints.down("sm")} {
+        height: 150px;
+        max-width: 200px;
       }
     }
 
@@ -39,6 +50,14 @@ const StyledSidebar = styled("div")`
       color: ${(props) => props.theme.palette.primary.main};
       text-align: center;
       font-size: 20px;
+    }
+
+    .image-list-bar {
+      max-width: 220px;
+
+      ${(props) => props.theme.breakpoints.down("sm")} {
+        max-width: 200px;
+      }
     }
   }
 `;
@@ -76,6 +95,7 @@ const Sidebar = () => {
               <ImageListItemBar
                 title={item.title}
                 subtitle={item.author}
+                className="image-list-bar"
               />
             </ImageListItem>
           ))}

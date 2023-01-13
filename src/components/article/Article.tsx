@@ -81,7 +81,7 @@ const Article = ({ article, isRow = false }: IPropsArticle) => {
   return (
     <StyledArticle className={classNames("Article", { isRow: isRow })}>
       <Link to={`/articles/${article._id}`}>
-        <img className={classNames("article-img", { isRow: isRow })} src={article.image ? baseURL + article.image : "./default-thumbnail.jpg"} />
+        <img className={classNames("article-img", { isRow: isRow })} src={article.image ? article.image : "./default-thumbnail.jpg"} />
       </Link>
       <Box className={classNames("article-content", { isRow: isRow })}>
         <Box className="article-details">
@@ -96,7 +96,7 @@ const Article = ({ article, isRow = false }: IPropsArticle) => {
             {article.title}
           </Typography>
         </Link>
-        <Typography className="article-desc" variant="body1">
+        <Typography className="article-desc" variant="body1" component='div'>
           {parse(article?.description)}
         </Typography>
       </Box>
