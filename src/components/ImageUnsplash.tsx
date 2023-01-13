@@ -82,13 +82,18 @@ const StyledDrawer = styled(Drawer)`
   }
 `;
 
-const ImageUnsplash = () => {
+interface IPropsImageUnsplash {
+  currentImage: string;
+  onImageChange: (image: string) => void;
+}
+
+const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => {
   const [open, setOpen] = useState(false);
   const [term, setTerm] = useState("");
   const navigate = useNavigate();
 
   const { data: images, isLoading } = useGetImagesQuery(term);
-  console.log("isLoading", isLoading, "response: ", images);
+
 
   const textInput = useRef<HTMLInputElement>();
 
@@ -103,13 +108,12 @@ const ImageUnsplash = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
   };
 
   return (
     <StyledImageUnsplash>
       <Box className="choose-img">
-        <img src="./images/choose-photo.jpg" alt="" />
+        <img src={currentImage || "./images/choose-photo.jpg"} alt="" />
         <Button onClick={handleClickOpen} className="btn-choose">
           Click to search an image
         </Button>
@@ -134,8 +138,9 @@ const ImageUnsplash = () => {
             <SearchIcon />
           </IconButton>
         </Box>
-
-        <Box className="search-images">{images && <ImagesList images={images.results} />}</Box>
+        <Box className="search-images">
+          {images && <ImagesList onImageChange={onImageChange} images={images.results} onCloseDrawer={closeAndReset} />}
+        </Box>
       </StyledDrawer>
     </StyledImageUnsplash>
   );

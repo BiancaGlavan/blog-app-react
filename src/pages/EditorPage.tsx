@@ -1,11 +1,10 @@
-import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
+import { Alert, Button, Container, FormControl, Grid, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useCreateArticleMutation, useGetCategoriesQuery, useUploadImageMutation } from "../redux/features/apiSlice";
-import ImageDropzone from "../components/ImageDropzone";
+import { useCreateArticleMutation, useGetCategoriesQuery } from "../redux/features/apiSlice";
 import ImageUnsplash from "../components/ImageUnsplash";
 
 const StyledEditor = styled(Container)`
@@ -27,17 +26,22 @@ const StyledEditor = styled(Container)`
     max-width: 300px;
     border-radius: 0;
   }
+
+  .alert {
+    margin-top: 20px;
+  }
 `;
 
 const EditorPage = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
+  const [image, setImage] = useState('');
+  const [isArticleCreated, setIsArticleCreated] = useState(false);
+
 
   const [createArticle, response] = useCreateArticleMutation();
-  const [uploadImage, uploadImageResponse] = useUploadImageMutation();
-
+  
   const { data: categories, isLoading } = useGetCategoriesQuery();
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -45,35 +49,35 @@ const EditorPage = () => {
   };
 
   const handleCreateArticle = () => {
-    if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
 
-      uploadImage(formData);
-    }
+    const newArticle = {
+      title,
+      description,
+      category,
+      image: image,
+    };
+
+    console.log("new article", newArticle);
+    createArticle({ article: newArticle });
   };
 
+
+
   useEffect(() => {
-    if (uploadImageResponse.data) {
-      const img = uploadImageResponse.data;
-      console.log("data ", img);
-
-      const newArticle = {
-        title,
-        description,
-        category,
-        image: img,
-      };
-
-      console.log("new article", newArticle);
-      createArticle({ article: newArticle });
+    if(response.isSuccess) {
+      setIsArticleCreated(true);
+      setDescription('');
+      setCategory('');
+      setTitle('');
+      setImage('');
     }
-  }, [uploadImageResponse]);
+
+  }, [response]);
 
   return (
     <StyledEditor>
       <Typography variant="h5">Write an article</Typography>
-
+      {isArticleCreated ? <Alert severity="success">Your article was created!</Alert> : null}
       <Grid container spacing={10}>
         <Grid className="create-article" item xs={12} md={6}>
           <FormControl sx={{ width: "300px" }}>
@@ -98,7 +102,7 @@ const EditorPage = () => {
           <ReactQuill theme="snow" value={description} onChange={setDescription} className="editor-input" />
         </Grid>
         <Grid item xs={12} md={6}>
-          <ImageUnsplash />
+          <ImageUnsplash currentImage={image} onImageChange={setImage}/>
         </Grid>
       </Grid>
 
@@ -107,6 +111,7 @@ const EditorPage = () => {
       <Button onClick={handleCreateArticle} variant="contained" size="large" className="btn-create">
         Add article
       </Button>
+      
     </StyledEditor>
   );
 };

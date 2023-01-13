@@ -1,5 +1,7 @@
-import { Box, Button, Container, Grid } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Button, Container, Grid, useMediaQuery } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
+import classNames from "classnames";
+import ArticlesList from "../components/article/ArticlesList";
 import HomepageArticlesList from "../components/article/HomepageArticlesList";
 import Sidebar from "../components/homepage/Sidebar";
 import { useGetArticlesQuery } from "../redux/features/apiSlice";
@@ -47,6 +49,10 @@ const StyledHomePage = styled("div")`
 `;
 
 const Homepage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablete= useMediaQuery(theme.breakpoints.down("lg"));
+
   const {
     data: articlesResponse,
     isLoading: isLoadingArticles,
@@ -67,14 +73,20 @@ const Homepage = () => {
         </Box>
       </Box>
       <Container className="middle-section">
-        <Grid container spacing={14}>
-          <Grid item xs={12} md={6}>
-            {articlesResponse && !isLoadingArticles && (
+        <Grid container spacing={2}>
+          <Grid item xs={12}  md={12} lg={6}>
+            {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
               <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} isRow={true} />
+            )}
+             {articlesResponse && !isLoadingArticles && isTablete && !isMobile && (
+              <ArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
+            )}
+            {articlesResponse && !isLoadingArticles && isMobile && (
+              <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
             )}
             <Button className="btn" variant="contained" size="large">See all posts</Button>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={12} lg={6}>
               <Sidebar />
           </Grid>  
         </Grid>
