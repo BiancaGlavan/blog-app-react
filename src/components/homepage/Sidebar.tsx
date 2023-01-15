@@ -8,12 +8,21 @@ import InfoIcon from "@mui/icons-material/Info";
 const StyledSidebar = styled("div")`
   background: ${(props) => props.theme.palette.background.paper};
   padding: 60px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   ${(props) => props.theme.breakpoints.down("lg")} {
-    padding: 10px;
+    padding: 20px;
+    flex-direction: row;
+    gap: 80px;
+  }
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .sidebar-login {
@@ -28,7 +37,7 @@ const StyledSidebar = styled("div")`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    
   }
 
   .sidebar-social-media {
@@ -50,6 +59,7 @@ const StyledSidebar = styled("div")`
       color: ${(props) => props.theme.palette.primary.main};
       text-align: center;
       font-size: 20px;
+      margin-bottom: 20px;
     }
 
     .image-list-bar {

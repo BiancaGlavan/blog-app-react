@@ -7,7 +7,6 @@ import Sidebar from "../components/homepage/Sidebar";
 import { useGetArticlesQuery } from "../redux/features/apiSlice";
 
 const StyledHomePage = styled("div")`
-
   margin-top: 80px;
 
   .homepage-top {
@@ -41,17 +40,39 @@ const StyledHomePage = styled("div")`
   .middle-section {
     margin-top: 100px;
 
+    .homepage-articles {
+      margin-left: 20px; 
+
+      ${(props) => props.theme.breakpoints.down("lg")} {
+        margin-right: 20px;
+      }
+    }
+    
+    .sidebar {
+      margin-right: 20px;
+
+      ${(props) => props.theme.breakpoints.down("lg")} {
+        margin-right: 0;
+        margin-left: 0;
+      }
+    }
+    
+
+
     .btn {
       margin-top: 50px;
+      margin-bottom: 50px;
       border-radius: 0;
     }
   }
+
+
 `;
 
 const Homepage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablete= useMediaQuery(theme.breakpoints.down("lg"));
+  const isTablete = useMediaQuery(theme.breakpoints.down("lg"));
 
   const {
     data: articlesResponse,
@@ -72,25 +93,31 @@ const Homepage = () => {
           <img src="./images/homepage-right.jpg" alt="" />
         </Box>
       </Box>
-      <Container className="middle-section">
+      <Box className="middle-section">
         <Grid container spacing={2}>
-          <Grid item xs={12}  md={12} lg={6}>
-            {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
+          <Grid item xs={12} md={12} lg={6}>
+           <Box className="homepage-articles">
+           {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
               <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} isRow={true} />
             )}
-             {articlesResponse && !isLoadingArticles && isTablete && !isMobile && (
+            {articlesResponse && !isLoadingArticles && isTablete && !isMobile && (
               <ArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
             )}
             {articlesResponse && !isLoadingArticles && isMobile && (
               <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
             )}
-            <Button className="btn" variant="contained" size="large">See all posts</Button>
+            <Button className="btn" variant="contained" size="large">
+              See all posts
+            </Button>
+           </Box>
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
+            <Box className="sidebar">
               <Sidebar />
-          </Grid>  
+            </Box>
+          </Grid>
         </Grid>
-      </Container>
+      </Box>
     </StyledHomePage>
   );
 };
