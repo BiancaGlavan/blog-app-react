@@ -56,9 +56,9 @@ const StyledArticle = styled("div")`
       }
 
       ${(props) => props.theme.breakpoints.down('sm')} {
-        font-size: 14px;
+        font-size: 16px;
         overflow: hidden;
-        line-height: 1rem;
+        line-height: 1.2rem;
         max-height: 4rem;
         -webkit-box-orient: vertical;
         display: block;
