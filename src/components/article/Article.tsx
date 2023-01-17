@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 interface IPropsArticle {
   article: IArticle;
   isRow?: boolean;
+  isMobile?: boolean;
 }
 
 const StyledArticle = styled("div")`
@@ -30,6 +31,10 @@ const StyledArticle = styled("div")`
       width: 250px;
       height: 298px;
     }
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      height: 150px;
+    }
   }
 
   .article-content {
@@ -40,10 +45,27 @@ const StyledArticle = styled("div")`
       width: 300px;
     }
 
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      height: 200px;
+    }
+
     .article-title {
       cursor: pointer;
       &:hover {
         color: ${(props) => props.theme.palette.primary.main};
+      }
+
+      ${(props) => props.theme.breakpoints.down('sm')} {
+        font-size: 14px;
+        overflow: hidden;
+        line-height: 1rem;
+        max-height: 4rem;
+        -webkit-box-orient: vertical;
+        display: block;
+        display: -webkit-box;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
       }
     }
   }
@@ -53,6 +75,16 @@ const StyledArticle = styled("div")`
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 10px;
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      gap: 5px;
+    }
+
+    .detail {
+      ${(props) => props.theme.breakpoints.down('sm')} {
+        font-size: 10px;
+      }
+    }
 
     .user {
       text-transform: uppercase;
@@ -73,11 +105,12 @@ const StyledArticle = styled("div")`
 
     ${(props) => props.theme.breakpoints.down("sm")} {
       -webkit-line-clamp: 2;
+      font-size: 14px;
     }
   }
 `;
 
-const Article = ({ article, isRow = false }: IPropsArticle) => {
+const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) => {
   return (
     <StyledArticle className={classNames("Article", { isRow: isRow })}>
       <Link to={`/articles/${article._id}`}>
@@ -85,11 +118,11 @@ const Article = ({ article, isRow = false }: IPropsArticle) => {
       </Link>
       <Box className={classNames("article-content", { isRow: isRow })}>
         <Box className="article-details">
-          <Typography className="user" variant="caption">
+          <Typography className="user detail" variant="caption">
             by {article.user.name}
           </Typography>
-          <Typography variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
-          <Typography variant="caption">{article.category.title}</Typography>
+          <Typography className="detail" variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
+          <Typography className="detail" variant="caption">{article.category.title}</Typography>
         </Box>
         <Link to={`/articles/${article._id}`}>
           <Typography className="article-title" variant="h6">

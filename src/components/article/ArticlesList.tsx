@@ -11,10 +11,11 @@ const StyledArticlesList = styled('div')`
 `;
 
 const ArticlesList = ({articles}: IPropsArticlesList) => {
+
   return (
     <StyledArticlesList className="ArticlesList">
         <Grid  container spacing={2} >
-            {articles.map((article, idx) => <Grid item key={article?._id}  xs={12} sm={6}  md={4} lg={3}>
+            {articles.map((article, idx) => <Grid item key={article?._id}  xs={6} sm={6}  md={4} lg={3}>
                 <Article article={article}/>
             </Grid>)}
         </Grid>
