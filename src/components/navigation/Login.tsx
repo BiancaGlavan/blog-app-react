@@ -1,4 +1,14 @@
-import { Box, Button, Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +27,9 @@ const StyledLogin = styled("div")`
 `;
 
 const StyledDialog = styled("div")`
+  ${(props) => props.theme.breakpoints.up("sm")} {
+    padding: 30px;
+  }
 
   .input {
     margin-top: 30px;
@@ -26,7 +39,6 @@ const StyledDialog = styled("div")`
     margin-top: 30px;
     width: 100%;
   }
-
 `;
 
 const Login = () => {
@@ -51,7 +63,6 @@ const Login = () => {
   };
 
   useEffect(() => {
-
     if (isSuccess) {
       dispatch(login(loginResponse.access_token));
       navigate("/");
@@ -72,9 +83,9 @@ const Login = () => {
         Login
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Login</DialogTitle>
-        <DialogContent>
-          <StyledDialog className="form-login">
+        <DialogContent className="dialog-content">
+          <StyledDialog>
+            <Typography variant="h6">Login</Typography>
             <TextField
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -98,6 +109,15 @@ const Login = () => {
             <Button onClick={handleLogin} className="btn" variant="contained" size="large">
               Login
             </Button>
+            {isLoading && (
+              <Backdrop
+                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                onClick={handleClose}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            )}
           </StyledDialog>
         </DialogContent>
       </Dialog>

@@ -1,8 +1,7 @@
-import { Box, Button, Dialog, DialogContent, Drawer, IconButton, TextField } from "@mui/material";
+import { Box, Button, Drawer, IconButton, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import SearchIcon from "@mui/icons-material/Search";
 import { useGetImagesQuery } from "../redux/features/apiUnsplashSlice";
 import ImagesList from "./createArticle/ImagesList";
 import { useNavigate } from "react-router-dom";
@@ -106,10 +105,6 @@ const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => 
     setTerm("");
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
   return (
     <StyledImageUnsplash>
       <Box className="choose-img">
@@ -123,7 +118,7 @@ const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => 
           <IconButton onClick={closeAndReset}>
             <ArrowBackIcon />
           </IconButton>
-          <form className="form" onSubmit={handleSubmit}>
+          <form className="form">
             <TextField
               inputRef={textInput}
               value={term}
@@ -134,9 +129,6 @@ const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => 
               autoComplete="off"
             />
           </form>
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
         </Box>
         <Box className="search-images">
           {images && <ImagesList onImageChange={onImageChange} images={images.results} onCloseDrawer={closeAndReset} />}

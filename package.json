@@ -25,7 +25,8 @@
     "react-router-dom": "^6.6.1",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "swiper": "^8.4.6"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",

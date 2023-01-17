@@ -13,7 +13,6 @@ import UserDropdown from "./Userdropdown";
 import { useGetMyProfileQuery } from "../../redux/features/apiSlice";
 
 const StyledNavigation = styled("div")`
-
   .navigation-container {
     display: flex;
     justify-content: space-between;
@@ -21,7 +20,6 @@ const StyledNavigation = styled("div")`
     margin-top: 20px;
     margin-bottom: 20px;
   }
- 
 
   .menu-links {
     display: flex;
@@ -30,14 +28,14 @@ const StyledNavigation = styled("div")`
 
     .menu-link {
       &:hover {
-        color: ${(props) => props.theme.palette.secondary.main};
+        color: ${(props) => props.theme.palette.primary.main};
       }
     }
   }
 
   .logo {
     &:hover {
-      color: ${(props) => props.theme.palette.secondary.main};
+      color: ${(props) => props.theme.palette.primary.main};
     }
   }
 `;
@@ -79,11 +77,15 @@ const Navigation = () => {
             <MenuIcon />
           </IconButton>
         )}
+
         {!isMobile && (
           <Link to={"/"}>
-            <Typography className="logo">Keep the Pot Boiling</Typography>
+            <Typography variant="h6" className="logo">
+              Keep the Pot Boiling
+            </Typography>
           </Link>
         )}
+
         <Box className="menu-links">
           {!isMobile && (
             <>

@@ -1,53 +1,32 @@
 import { Box, Button, Container, Grid, useMediaQuery } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import HomepageArticlesList from "../components/article/HomepageArticlesList";
 import Sidebar from "../components/homepage/Sidebar";
+import Slider from "../components/homepage/Slider";
 import { useGetArticlesQuery } from "../redux/features/apiSlice";
 
 const StyledHomePage = styled("div")`
   margin-top: 80px;
 
   .homepage-top {
-    margin-right: 20px;
     margin-left: 20px;
-    display: flex;
-    gap: 20px;
-
-    ${(props) => props.theme.breakpoints.down("sm")} {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .img-container {
-      max-width: 485px;
-      max-height: 500px;
-
-      ${(props) => props.theme.breakpoints.down("sm")} {
-        max-width: 400px;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
+    margin-right: 20px;
   }
 
   .middle-section {
-    margin-top: 100px;
+    margin-top: 80px;
 
     .homepage-articles {
-      margin-left: 20px; 
+      margin-left: 20px;
 
       ${(props) => props.theme.breakpoints.down("lg")} {
         margin-right: 20px;
       }
     }
-    
+
     .sidebar {
       margin-right: 20px;
 
@@ -56,8 +35,6 @@ const StyledHomePage = styled("div")`
         margin-left: 0;
       }
     }
-    
-
 
     .btn {
       margin-top: 50px;
@@ -65,8 +42,6 @@ const StyledHomePage = styled("div")`
       border-radius: 0;
     }
   }
-
-
 `;
 
 const Homepage = () => {
@@ -83,33 +58,27 @@ const Homepage = () => {
   return (
     <StyledHomePage className="Homepage">
       <Box className="homepage-top">
-        <Box className="img-container">
-          <img src="./images/homepage-left.jpg" alt="" />
-        </Box>
-        <Box className="img-container">
-          <img src="./images/homepage-middle.jpg" alt="" />
-        </Box>
-        <Box className="img-container">
-          <img src="./images/homepage-right.jpg" alt="" />
-        </Box>
+        <Slider />
       </Box>
       <Box className="middle-section">
-        <Grid container spacing={2}>
+        <Grid container spacing={12}>
           <Grid item xs={12} md={12} lg={6}>
-           <Box className="homepage-articles">
-           {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
-              <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} isRow={true} />
-            )}
-            {articlesResponse && !isLoadingArticles && isTablete && !isMobile && (
-              <ArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
-            )}
-            {articlesResponse && !isLoadingArticles && isMobile && (
-              <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
-            )}
-            <Button className="btn" variant="contained" size="large">
-              See all posts
-            </Button>
-           </Box>
+            <Box className="homepage-articles">
+              {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
+                <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} isRow={true} />
+              )}
+              {articlesResponse && !isLoadingArticles && isTablete && !isMobile && (
+                <ArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
+              )}
+              {articlesResponse && !isLoadingArticles && isMobile && (
+                <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
+              )}
+              <Link to={"/articles"}>
+                <Button className="btn" variant="contained" size="large">
+                  See all posts
+                </Button>
+              </Link>
+            </Box>
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Box className="sidebar">

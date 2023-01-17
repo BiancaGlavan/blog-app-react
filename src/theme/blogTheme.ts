@@ -4,7 +4,7 @@ const blogTheme = createTheme({
     palette: {
         background: {
             default: "#fff",
-            paper: "#FAE7D5"
+            paper: "#fff"
         },
         text :{
             primary: "#000000",
@@ -14,7 +14,7 @@ const blogTheme = createTheme({
             main: "#BB5A3A",
         },
         secondary: {
-            main: "#BB5A3A"
+            main: "#FAE7D5"
         }
     },
     typography : {

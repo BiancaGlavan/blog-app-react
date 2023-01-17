@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import classNames from "classnames";
 import { useState } from "react";
-import { IImage, IImageResponse } from "../../redux/features/apiUnsplashSlice";
+import { IImage } from "../../redux/features/apiUnsplashSlice";
 
 interface IPropsImagesList {
   images: IImage[];

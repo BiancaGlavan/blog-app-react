@@ -1,4 +1,4 @@
-import { Alert, Button, Container, FormControl, Grid, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
+import { Alert, Backdrop, Button, CircularProgress, Container, FormControl, Grid, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState, useEffect } from "react";
@@ -33,6 +33,7 @@ const StyledEditor = styled(Container)`
 `;
 
 const EditorPage = () => {
+  const [open, setOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -41,8 +42,13 @@ const EditorPage = () => {
 
 
   const [createArticle, response] = useCreateArticleMutation();
+  const { isLoading: isLoadingCreateArticle } = response;
   
   const { data: categories, isLoading } = useGetCategoriesQuery();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value);
@@ -60,8 +66,6 @@ const EditorPage = () => {
     console.log("new article", newArticle);
     createArticle({ article: newArticle });
   };
-
-
 
   useEffect(() => {
     if(response.isSuccess) {
@@ -111,6 +115,15 @@ const EditorPage = () => {
       <Button onClick={handleCreateArticle} variant="contained" size="large" className="btn-create">
         Add article
       </Button>
+      {isLoadingCreateArticle && (
+              <Backdrop
+                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                onClick={handleClose}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            )}
       
     </StyledEditor>
   );

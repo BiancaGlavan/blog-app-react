@@ -1,12 +1,11 @@
-import { Box, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from "@mui/material";
+import { Box, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Login from "../navigation/Login";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import data from "../../utils/data.json";
-import InfoIcon from "@mui/icons-material/Info";
 
 const StyledSidebar = styled("div")`
-  background: ${(props) => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.secondary.main};
   padding: 60px;
   display: flex;
   flex-direction: column;
@@ -15,6 +14,8 @@ const StyledSidebar = styled("div")`
 
   ${(props) => props.theme.breakpoints.down("lg")} {
     padding: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     flex-direction: row;
     gap: 80px;
   }
@@ -27,7 +28,7 @@ const StyledSidebar = styled("div")`
 
   .sidebar-login {
     .text {
-      color: ${(props) => props.theme.palette.primary.main};
+      color: ${(props) => props.theme.palette.text.primary};
       margin-bottom: 30px;
       text-align: center;
     }
@@ -56,7 +57,8 @@ const StyledSidebar = styled("div")`
     }
 
     .list-image-title {
-      color: ${(props) => props.theme.palette.primary.main};
+      color: ${(props) => props.theme.palette.text.primary};
+      background: ${(props) => props.theme.palette.secondary.main};
       text-align: center;
       font-size: 20px;
       margin-bottom: 20px;
