@@ -33,6 +33,11 @@ const StyledImageUnsplash = styled("div")`
       }
     }
 
+    
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      opacity: 0.8;
+    }
+
     img {
       max-height: 500px;
       width: 100%;
@@ -40,7 +45,19 @@ const StyledImageUnsplash = styled("div")`
     }
 
     .btn-choose {
-        display: none;
+      display: none;
+
+      ${(props) => props.theme.breakpoints.down('sm')} {
+        display: block;
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left: 0;
+        font-weight: 700;
+        color: ${(props) => props.theme.palette.text.primary};
+        font-size: 20px;
+        width: 100%;
+      }
     }
 `;
 
