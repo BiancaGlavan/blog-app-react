@@ -47,6 +47,7 @@ const StyledArticle = styled("div")`
 
     ${(props) => props.theme.breakpoints.down('sm')} {
       height: 200px;
+      padding: 5px;
     }
 
     .article-title {
