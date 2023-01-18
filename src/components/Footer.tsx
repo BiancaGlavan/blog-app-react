@@ -21,13 +21,23 @@ const StyledFooter = styled("div")`
     color: ${(props) => props.theme.palette.background.default};
   }
 
+  .text-field {
+    .css-1j9ldlq-MuiInputBase-root-MuiInput-root:before {
+      border-bottom: 1.5px solid #fff;
+    }
+
+    .css-164rakx-MuiFormLabel-root-MuiInputLabel-root {
+      color: #fff;
+    }
+  }
+
 `;
 
 const Footer = () => {
   return (
     <StyledFooter>
       <Typography className="footer-title" variant="h5">Let the posts come to you.</Typography>
-      <TextField className="text-field" type="email" label="Email" variant="standard" autoComplete="off"/>
+      <TextField className="text-field" sx={{ input: { color: '#fff' } }} type="email" label="Email" variant="standard" autoComplete="off"/>
       <Button className="btn" variant="contained" size="large">Subscribe</Button>
     </StyledFooter>
   );
