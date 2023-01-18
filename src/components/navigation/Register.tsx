@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../../redux/features/apiSlice";
 
 const StyledRegister = styled("div")`
@@ -39,8 +40,10 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [open, setOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   const [registerUser, response] = useRegisterUserMutation();
-  const { isLoading, isSuccess } = response;
+  const { data: registerResponse, isLoading, isSuccess } = response;
 
   const handleRegister = () => {
     const user = {
@@ -59,6 +62,13 @@ const Register = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+      handleClose();
+    }
+  }, [isSuccess]);
 
   return (
     <StyledRegister className="Register">

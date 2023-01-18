@@ -107,16 +107,24 @@ const Navigation = () => {
               )}
             </>
           )}
-          {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout} />}
+
           {authState.isAuth && authState.user && (
-            <Link to={"/editor"}>
-              <Tooltip title="Write">
-                <IconButton>
-                  <CreateIcon />
-                </IconButton>
-              </Tooltip>
-            </Link>
+            <>
+              <Link to={"/editor"}>
+                <Typography className="menu-link" variant="subtitle1">
+                  Write
+                </Typography>
+              </Link>
+              <Link to={"/editor"}>
+                <Tooltip title="Edit">
+                  <IconButton>
+                    <CreateIcon />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            </>
           )}
+          {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout} />}
         </Box>
         <Drawer
           variant="temporary"

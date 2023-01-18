@@ -66,6 +66,7 @@ const Login = () => {
     if (isSuccess) {
       dispatch(login(loginResponse.access_token));
       navigate("/");
+      handleClose();
     }
   }, [isSuccess, loginResponse]);
 
