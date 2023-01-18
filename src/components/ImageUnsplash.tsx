@@ -5,6 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useGetImagesQuery } from "../redux/features/apiUnsplashSlice";
 import ImagesList from "./createArticle/ImagesList";
 import { useNavigate } from "react-router-dom";
+import useDebounce from "../utils/useDebounce";
 
 const StyledImageUnsplash = styled("div")`
   margin-top: 50px;
@@ -34,7 +35,7 @@ const StyledImageUnsplash = styled("div")`
     }
 
     
-    ${(props) => props.theme.breakpoints.down('sm')} {
+    ${(props) => props.theme.breakpoints.down("sm")} {
       opacity: 0.8;
     }
 
@@ -47,7 +48,7 @@ const StyledImageUnsplash = styled("div")`
     .btn-choose {
       display: none;
 
-      ${(props) => props.theme.breakpoints.down('sm')} {
+      ${(props) => props.theme.breakpoints.down("sm")} {
         display: block;
         position: absolute;
         height: 100%;
@@ -104,12 +105,14 @@ interface IPropsImageUnsplash {
 }
 
 const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => {
+  const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [term, setTerm] = useState("");
   const navigate = useNavigate();
 
-  const { data: images, isLoading } = useGetImagesQuery(term);
-
+  const debouncedTerm = useDebounce(term, 300);
+  
+  const { data: images, isLoading } = useGetImagesQuery({ term: debouncedTerm, page: page }, { skip: debouncedTerm.length < 2 });
 
   const textInput = useRef<HTMLInputElement>();
 
@@ -120,6 +123,10 @@ const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => 
   const closeAndReset = () => {
     setOpen(false);
     setTerm("");
+  };
+
+  const handleNextPage = () => {
+    setPage(page + 1);
   };
 
   return (
@@ -148,7 +155,15 @@ const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => 
           </form>
         </Box>
         <Box className="search-images">
-          {images && <ImagesList onImageChange={onImageChange} images={images.results} onCloseDrawer={closeAndReset} />}
+          {images && (
+            <ImagesList
+              onNextPage={handleNextPage}
+              onImageChange={onImageChange}
+              images={images.results}
+              onCloseDrawer={closeAndReset}
+              hasNext={images.total_pages > page}
+            />
+          )}
         </Box>
       </StyledDrawer>
     </StyledImageUnsplash>

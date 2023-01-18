@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import classNames from "classnames";
@@ -9,6 +9,8 @@ interface IPropsImagesList {
   images: IImage[];
   onImageChange: (image: string) => void;
   onCloseDrawer: () => void;
+  onNextPage: () => void;
+  hasNext?: boolean;
 }
 
 const StyledImagesList = styled(Container)`
@@ -37,19 +39,26 @@ const StyledImagesList = styled(Container)`
     }
   }
 
-  .add-btn {
-    border-radius: 0;
+  .buttons {
     margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+
+    .add-btn {
+      border-radius: 0;
+    }
   }
 `;
 
-const ImagesList = ({ images, onImageChange, onCloseDrawer }: IPropsImagesList) => {
+const ImagesList = ({ images, onImageChange, onCloseDrawer, onNextPage, hasNext = false }: IPropsImagesList) => {
   const [selectedImage, setSelectedImage] = useState("");
 
   const handleSaveImage = () => {
     onImageChange(selectedImage);
     onCloseDrawer();
   };
+
   return (
     <StyledImagesList className="ImagesList">
       <Grid container spacing={2}>
@@ -64,7 +73,18 @@ const ImagesList = ({ images, onImageChange, onCloseDrawer }: IPropsImagesList) 
           </Grid>
         ))}
       </Grid>
-      <Button className="add-btn" variant="contained" onClick={handleSaveImage}>add image</Button>
+      <Box className="buttons">
+        {images.length > 0 && (
+          <>
+            <Button className="more-btn" onClick={() => onNextPage()}>
+              Show more
+            </Button>
+            <Button disabled={!selectedImage} className="add-btn" variant="contained" onClick={handleSaveImage}>
+              add image
+            </Button>
+          </>
+        )}
+      </Box>
     </StyledImagesList>
   );
 };
