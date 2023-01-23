@@ -89,16 +89,17 @@ const Navigation = () => {
         <Box className="menu-links">
           {!isMobile && (
             <>
+             <Link to={"/"}>
+                <Typography className="menu-link" variant="subtitle1">
+                  Home
+                </Typography>
+              </Link>
               <Link to={"/articles"}>
                 <Typography className="menu-link" variant="subtitle1">
                   Articles
                 </Typography>
               </Link>
-              <Link to={"/categories"}>
-                <Typography className="menu-link" variant="subtitle1">
-                  Categories
-                </Typography>
-              </Link>
+             
               {!authState.isAuth && (
                 <>
                   <Login />
@@ -115,15 +116,11 @@ const Navigation = () => {
                   Write
                 </Typography>
               </Link>
-              <Link to={"/editor"}>
-                <Tooltip title="Edit">
-                  <IconButton>
-                    <CreateIcon />
-                  </IconButton>
-                </Tooltip>
-              </Link>
             </>
           )}
+          {authState.isAuth && userProfile?.profile.role === 'admin' && <Link to={'/admin'}>
+          <Typography className="menu-link" variant="subtitle1">Admin</Typography>
+          </Link>}
           {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout} />}
         </Box>
         <Drawer

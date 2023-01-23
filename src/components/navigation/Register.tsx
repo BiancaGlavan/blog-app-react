@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../../redux/features/apiSlice";
 
 const StyledRegister = styled("div")`
-  .menu-link {
+  .register-btn {
     border-radius: 0;
   }
 `;
@@ -31,6 +31,7 @@ const StyledDialog = styled("div")`
   .btn {
     margin-top: 30px;
     width: 100%;
+    border-radius: 0;
   }
 `;
 
@@ -72,7 +73,7 @@ const Register = () => {
 
   return (
     <StyledRegister className="Register">
-      <Button className="menu-link" variant="outlined" onClick={handleClickOpen}>
+      <Button className="register-btn" variant="contained" onClick={handleClickOpen}>
         Register
       </Button>
       <Dialog open={open} onClose={handleClose}>
