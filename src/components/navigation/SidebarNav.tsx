@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
 import Login from "./Login";
 import Register from "./Register";
 
@@ -22,6 +23,8 @@ const StyledSidebarNav = styled("div")`
 `;
 
 const SidebarNav = () => {
+  const authState = useAppSelector((state) => state.auth);
+  
   return (
     <StyledSidebarNav>
       <Link to={"/"}>
@@ -40,8 +43,12 @@ const SidebarNav = () => {
             Categories
           </Typography>
         </Link>
-        <Login />
-        <Register />
+        {!authState.isAuth && (
+                <>
+                  <Login />
+                  <Register />
+                </>
+              )}
       </Box>
     </StyledSidebarNav>
   );

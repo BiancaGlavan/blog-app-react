@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import { IArticle } from "../../redux/features/apiSlice";
 import classNames from "classnames";
 import { baseURL } from "../../utils/config";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 
@@ -73,6 +73,7 @@ const StyledArticle = styled("div")`
 
   .article-details {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 10px;
@@ -109,6 +110,14 @@ const StyledArticle = styled("div")`
       font-size: 14px;
     }
   }
+
+  .cat {
+    font-size: 12px;
+    color: ${(props) => props.theme.palette.text.primary};
+    &:hover {
+      color: ${(props) => props.theme.palette.primary.main};
+    }
+  }
 `;
 
 const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) => {
@@ -123,7 +132,9 @@ const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) =>
             by {article.user.name}
           </Typography>
           <Typography className="detail" variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
-          <Typography className="detail" variant="caption">{article.category.title}</Typography>
+          <Link to={`/categories/${article.category._id}/articles`}>
+          <Button className="detail cat" >{article.category.title}</Button>
+          </Link>
         </Box>
         <Link to={`/articles/${article._id}`}>
           <Typography className="article-title" variant="h6">

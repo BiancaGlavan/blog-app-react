@@ -14,7 +14,7 @@ const blogTheme = createTheme({
             main: "#BB5A3A",
         },
         secondary: {
-            main: "#FAE7D5"
+            main: "#e0d1c3"
         }
     },
     typography : {

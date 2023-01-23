@@ -38,6 +38,7 @@ const StyledDialog = styled("div")`
   .btn {
     margin-top: 30px;
     width: 100%;
+    border-radius: 0;
   }
 `;
 
