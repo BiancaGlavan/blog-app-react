@@ -17,8 +17,7 @@ const StyledNavigation = styled("div")`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    padding: 20px;
   }
 
   .menu-links {

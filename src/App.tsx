@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Navigation from "./components/navigation/Navigation";
 import AdminLayout from "./layouts/AdminLayout";
 import MainLayout from "./layouts/MainLayout";
+import AdminPage from "./pages/AdminPage";
 import ArticlesByCategory from "./pages/ArticlesByCategory";
 import ArticlesPage from "./pages/ArticlesPage";
 import EditorPage from "./pages/EditorPage";
@@ -28,7 +29,7 @@ function App() {
             <Route path="/articles/:id" element={<SingleArticlePage />} />
           </Route>
           <Route path="/" element={<AdminLayout />}>
-            <Route path="/admin" element={<div>admin page</div>} />
+            <Route path="/admin" element={<AdminPage />} />
           </Route>
         </Routes>
       </div>
