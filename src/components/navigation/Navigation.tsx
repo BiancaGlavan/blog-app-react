@@ -78,7 +78,7 @@ const Navigation = () => {
 
         {!isMobile && (
           <Link to={"/"}>
-            <Typography variant="h6" className="logo">
+            <Typography variant="subtitle1" className="logo">
               Keep the Pot Boiling
             </Typography>
           </Link>

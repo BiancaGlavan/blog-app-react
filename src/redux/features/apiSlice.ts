@@ -42,7 +42,7 @@ interface IMyProfileResponse {
   profile: IUser;
 }
 
-interface ICategory {
+export interface ICategory {
   id?: string;
   _id?: string;
   title: string;
@@ -58,6 +58,15 @@ interface IArticlePayload {
     title: string;
     image?: string;
     description: string;
+}
+
+interface ICreateCategoryResponse {
+  category: ICategory;
+}
+
+interface ICategoryPayload {
+  title: string;
+  image?: string;
 }
 
 export const backendApi = createApi({
@@ -83,6 +92,15 @@ export const backendApi = createApi({
           body: article,
         };
       },
+    }),
+    createCategory: builder.mutation<ICreateCategoryResponse, { category: ICategoryPayload }>({
+      query({ category }) {
+        return {
+          url: `categories`,
+          method: "POST",
+          body: category,
+        };
+      }
     }),
     loginUser: builder.mutation<ILoginResponse, { data: Partial<IUser> }>({
       query: ({ data }) => ({
@@ -132,6 +150,7 @@ export const {
   useGetArticlesQuery,
   useGetArticleByIdQuery,
   useGetCategoryArticlesQuery,
+  useCreateCategoryMutation,
 } = backendApi;
 
 export default backendApi;

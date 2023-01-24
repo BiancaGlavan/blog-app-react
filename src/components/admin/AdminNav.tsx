@@ -1,4 +1,4 @@
-import { Typography, useTheme, useMediaQuery, IconButton, Drawer } from "@mui/material";
+import { Typography, useTheme, useMediaQuery, IconButton, Drawer, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/features/authSlice";
@@ -11,7 +11,15 @@ import AdminSidebar from "./AdminSidebar";
 const StyledAdminNav = styled("div")`
   display: flex;
   justify-content: space-between;
-  
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0d1c3;
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
   .logo {
     &:hover {
@@ -22,7 +30,7 @@ const StyledAdminNav = styled("div")`
 
 const AdminNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  
+
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -38,32 +46,40 @@ const AdminNav = () => {
     dispatch(logout());
     navigate("/");
   };
-  
+
   return (
     <StyledAdminNav className="AdminNav">
-       {isMobile && (
+     
+      <Box className="nav-left">
+        {isMobile && (
           <IconButton onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
         )}
-        
-        <Link to={'/'}><Typography className="logo" variant="subtitle1">Keep The Pot Boiling</Typography></Link>
-        {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout}/>}
 
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": { boxSizing: "border-box", width: 280 },
-          }}
-        >
-          <AdminSidebar />
-        </Drawer>
+        <Link to={"/"}>
+          <Typography className="logo" variant="subtitle1">
+            Keep The Pot Boiling
+          </Typography>
+        </Link>
+      </Box>
+      {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout} />}
+
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 280 },
+        }}
+      >
+        <AdminSidebar />
+      </Drawer>
+      
     </StyledAdminNav>
   );
 };
