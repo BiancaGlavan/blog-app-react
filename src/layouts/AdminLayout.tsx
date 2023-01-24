@@ -1,22 +1,32 @@
-import { Grid } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import AdminNav from "../components/admin/AdminNav";
 import AdminSidebar from "../components/admin/AdminSidebar";
-import AdminPage from "../pages/AdminPage";
+import { styled } from "@mui/material/styles";
+
+const StyledAdminLayout = styled('div')`
+  display: flex;
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+`;
 
 const AdminLayout = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <div>
-      <AdminNav />
-      <Grid container>
-        <Grid item lg={2}>
-          <AdminSidebar />
-        </Grid>
-        <Grid item lg={10}>
-          <Outlet />
-        </Grid>
-      </Grid>
-    </div>
+    <StyledAdminLayout className="AdminLayout">
+      {!isMobile && <AdminSidebar />}
+      <Box className="main">
+        <AdminNav />
+        <Outlet />
+      </Box>
+    </StyledAdminLayout>
   );
 };
 

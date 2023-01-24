@@ -1,11 +1,12 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { Route, Routes } from "react-router-dom";
-import Footer from "./components/Footer";
-import Navigation from "./components/navigation/Navigation";
 import AdminLayout from "./layouts/AdminLayout";
 import MainLayout from "./layouts/MainLayout";
-import AdminPage from "./pages/AdminPage";
+import AdminArticlesPage from "./pages/adminPages/AdminArticlesPage";
+import AdminCategoriesPage from "./pages/adminPages/AdminCategoriesPage";
+import AdminPage from "./pages/adminPages/AdminPage";
+import AdminUsersPage from "./pages/adminPages/AdminUsersPage";
 import ArticlesByCategory from "./pages/ArticlesByCategory";
 import ArticlesPage from "./pages/ArticlesPage";
 import EditorPage from "./pages/EditorPage";
@@ -30,6 +31,9 @@ function App() {
           </Route>
           <Route path="/" element={<AdminLayout />}>
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/categories" element={<AdminCategoriesPage />} />
+            <Route path="/admin/articles" element={<AdminArticlesPage />} />
+            <Route path="/admin/users" element={<AdminUsersPage />} />
           </Route>
         </Routes>
       </div>

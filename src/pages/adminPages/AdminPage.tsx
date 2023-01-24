@@ -5,7 +5,7 @@ const StyledAdminPage = styled('div')``;
 const AdminPage = () => {
   return (
     <StyledAdminPage className="AdminPage">AdminPage
-    
+      
     </StyledAdminPage>
   )
 }
