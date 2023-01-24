@@ -1,4 +1,4 @@
-import { useTheme, useMediaQuery, IconButton, Drawer, Typography, Container, Box, Tooltip } from "@mui/material";
+import { useTheme, useMediaQuery, IconButton, Drawer, Typography, Container, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
@@ -6,7 +6,6 @@ import SidebarNav from "./SidebarNav";
 import { Link, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import CreateIcon from "@mui/icons-material/Create";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout, setUser } from "../../redux/features/authSlice";
 import UserDropdown from "./Userdropdown";

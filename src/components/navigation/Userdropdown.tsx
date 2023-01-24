@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IUser } from "../../redux/features/authSlice";
@@ -29,7 +29,7 @@ const UserDropdown = ({ user, handleLogout }: IPropsUserDropdown) => {
         />
       </IconButton>
       <Menu
-        sx={{ mt: "45px" }}
+        sx={{ mt: "40px" }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
@@ -44,13 +44,34 @@ const UserDropdown = ({ user, handleLogout }: IPropsUserDropdown) => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
+       <Box className="user-info" sx={{padding: '10px 20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
+       <Typography variant="subtitle2" textAlign="center" sx={{ textTransform: "uppercase" }}>
+          {user.name}
+        </Typography>
+
+        <Typography variant="subtitle2" textAlign="center">
+          Role: {user.role}
+        </Typography>
+
+        <Typography variant="caption" textAlign="center" color="GrayText">
+          {user.email}
+        </Typography>
+
+       </Box>
+        <Divider />
+
         <MenuItem onClick={handleCloseUserMenu}>
-          <Typography textAlign="center">
-            <Link to={"/profile"}>{"My profile"}</Link>
-          </Typography>
+          <Link to={"/profile"}>
+            {" "}
+            <Typography variant="subtitle2" textAlign="center">
+              {"Profile"}
+            </Typography>
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleLogout}>
-          <Typography textAlign="center">{"Logout"}</Typography>
+          <Typography variant="subtitle2" textAlign="center">
+            {"Logout"}
+          </Typography>
         </MenuItem>
       </Menu>
     </Box>
