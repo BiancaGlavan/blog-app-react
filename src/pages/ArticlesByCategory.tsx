@@ -2,7 +2,7 @@ import { Box, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
-import Categories from "../components/homepage/categories";
+import Categories from "../components/homepage/Categories";
 import { useGetArticleByIdQuery, useGetCategoryArticlesQuery } from "../redux/features/apiSlice";
 
 const StyledArticlesByCategory = styled(Container)`

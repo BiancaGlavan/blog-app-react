@@ -7,6 +7,8 @@ import ImagesList from "./createArticle/ImagesList";
 import { useNavigate } from "react-router-dom";
 import useDebounce from "../utils/useDebounce";
 
+import defaultImage from '../assets/choose-photo.jpg';
+
 const StyledImageUnsplash = styled("div")`
   margin-top: 50px;
 
@@ -132,7 +134,7 @@ const ImageUnsplash = ({ currentImage, onImageChange }: IPropsImageUnsplash) => 
   return (
     <StyledImageUnsplash>
       <Box className="choose-img">
-        <img src={currentImage || "./images/choose-photo.jpg"} alt="" />
+        <img src={currentImage || defaultImage} alt="" />
         <Button onClick={handleClickOpen} className="btn-choose">
           Click to search an image
         </Button>

@@ -13,6 +13,7 @@ const StyledAdminSidebar = styled("div")`
   align-items: flex-start;
   border-right: 1px solid #e0d1c3;
   height: 100vh;
+  
 
   .sidebar-btn {
     display: flex;

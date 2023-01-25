@@ -7,18 +7,16 @@ const StyledCategories = styled("div")`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
 
     ${(props) => props.theme.breakpoints.down('sm')} {
       gap: 5px;
     }
 
-  .cat-container {
-    
     .cat {
       color: black;
       font-weight: 600;
-      font-size: 17px;
+      font-size: 15px;
 
       ${(props) => props.theme.breakpoints.down('sm')} {
         font-size: 14px;
@@ -28,7 +26,7 @@ const StyledCategories = styled("div")`
         color: ${(props) => props.theme.palette.primary.main};
       }
     }
-  }
+ 
 
 `;
 
@@ -38,11 +36,9 @@ const Categories = () => {
   return (
     <StyledCategories className="Categories">
       {categories?.map((category) => (
-        <Box className="cat-container" key={category._id}>
-          <Link to={`/categories/${category._id}/articles`}>
-              <Button className="cat"> #{category.title}</Button>
+          <Link key={category._id} to={`/categories/${category._id}/articles`}>
+              <Button className="cat"> {category.title}</Button>
           </Link>
-        </Box>
       ))}
     </StyledCategories>
   );

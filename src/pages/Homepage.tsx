@@ -1,11 +1,10 @@
-import { Box, Button, Container, Grid, useMediaQuery } from "@mui/material";
+import { Box, Button, Grid, useMediaQuery } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
-import classNames from "classnames";
 import { Link } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import HomepageArticlesList from "../components/article/HomepageArticlesList";
 import Sidebar from "../components/homepage/Sidebar";
-import Categories from "../components/homepage/categories";
+import Categories from "../components/homepage/Categories";
 import { useGetArticlesQuery } from "../redux/features/apiSlice";
 
 const StyledHomePage = styled("div")`

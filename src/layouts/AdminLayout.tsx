@@ -1,10 +1,10 @@
-import { Box, useTheme, useMediaQuery } from "@mui/material";
+import { Box, useTheme, useMediaQuery, Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import AdminNav from "../components/admin/AdminNav";
 import AdminSidebar from "../components/admin/AdminSidebar";
 import { styled } from "@mui/material/styles";
 
-const StyledAdminLayout = styled('div')`
+const StyledAdminLayout = styled("div")`
   display: flex;
 
   .main {
@@ -12,7 +12,6 @@ const StyledAdminLayout = styled('div')`
     flex-direction: column;
     width: 100%;
   }
-
 `;
 
 const AdminLayout = () => {

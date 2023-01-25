@@ -59,7 +59,7 @@ const AdminNav = () => {
 
         <Link to={"/"}>
           <Typography className="logo" variant="subtitle1">
-            Keep The Pot Boiling
+            Go to website
           </Typography>
         </Link>
       </Box>
