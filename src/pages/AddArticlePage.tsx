@@ -1,4 +1,16 @@
-import { Alert, Backdrop, Button, CircularProgress, Container, FormControl, Grid, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Backdrop,
+  Button,
+  CircularProgress,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState, useEffect } from "react";
@@ -7,7 +19,7 @@ import "react-quill/dist/quill.snow.css";
 import { useCreateArticleMutation, useGetCategoriesQuery } from "../redux/features/apiSlice";
 import ImageUnsplash from "../components/ImageUnsplash";
 
-const StyledEditor = styled(Container)`
+const StyledAddArticlePage = styled(Container)`
   margin-top: 80px;
 
   .create-article {
@@ -25,6 +37,7 @@ const StyledEditor = styled(Container)`
     margin-top: 60px;
     max-width: 300px;
     border-radius: 0;
+    margin-bottom: 50px;
   }
 
   .alert {
@@ -32,30 +45,26 @@ const StyledEditor = styled(Container)`
   }
 `;
 
-const EditorPage = () => {
-  const [open, setOpen] = useState(false);
+const AddArticlePage = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
   const [isArticleCreated, setIsArticleCreated] = useState(false);
-
 
   const [createArticle, response] = useCreateArticleMutation();
   const { isLoading: isLoadingCreateArticle } = response;
-  
-  const { data: categories, isLoading } = useGetCategoriesQuery();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { data: categories, isLoading } = useGetCategoriesQuery();
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value);
   };
 
   const handleCreateArticle = () => {
-
+    if (isLoadingCreateArticle) {
+      return;
+    }
     const newArticle = {
       title,
       description,
@@ -68,18 +77,17 @@ const EditorPage = () => {
   };
 
   useEffect(() => {
-    if(response.isSuccess) {
+    if (response.isSuccess) {
       setIsArticleCreated(true);
-      setDescription('');
-      setCategory('');
-      setTitle('');
-      setImage('');
+      setDescription("");
+      setCategory("");
+      setTitle("");
+      setImage("");
     }
-
   }, [response]);
 
   return (
-    <StyledEditor>
+    <StyledAddArticlePage className="AddArticlePage">
       <Typography variant="h5">Write an article</Typography>
       {isArticleCreated ? <Alert severity="success">Your article was created!</Alert> : null}
       <Grid container spacing={10}>
@@ -87,11 +95,12 @@ const EditorPage = () => {
           <FormControl sx={{ width: "300px" }}>
             <InputLabel>Category</InputLabel>
             <Select value={category} label="Category" onChange={handleChange}>
-              {categories?.map((category, idx) => (
-                <MenuItem key={category._id} value={category._id}>
-                  {category.title}
-                </MenuItem>
-              ))}
+              {categories &&
+                categories?.map((category, idx) => (
+                  <MenuItem key={category._id} value={category._id}>
+                    {category.title}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
 
@@ -106,27 +115,23 @@ const EditorPage = () => {
           <ReactQuill theme="snow" value={description} onChange={setDescription} className="editor-input" />
         </Grid>
         <Grid item xs={12} md={6}>
-          <ImageUnsplash currentImage={image} onImageChange={setImage}/>
+          <ImageUnsplash currentImage={image} onImageChange={setImage} />
         </Grid>
       </Grid>
 
       {/* <ImageDropzone onChange={setFile} /> */}
 
-      <Button onClick={handleCreateArticle} variant="contained" size="large" className="btn-create">
-        Add article
+      <Button
+        disabled={isLoadingCreateArticle}
+        onClick={handleCreateArticle}
+        variant="contained"
+        size="large"
+        className="btn-create"
+      >
+        {isLoadingCreateArticle ? "loading..." : "Add article"}
       </Button>
-      {isLoadingCreateArticle && (
-              <Backdrop
-                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={open}
-                onClick={handleClose}
-              >
-                <CircularProgress color="inherit" />
-              </Backdrop>
-            )}
-      
-    </StyledEditor>
+    </StyledAddArticlePage>
   );
 };
 
-export default EditorPage;
+export default AddArticlePage;

@@ -109,7 +109,7 @@ const Navigation = () => {
 
           {authState.isAuth && authState.user && (
             <>
-              <Link to={"/editor"}>
+              <Link to={"/articles/add"}>
                 <Typography className="menu-link" variant="subtitle1">
                   Write
                 </Typography>
