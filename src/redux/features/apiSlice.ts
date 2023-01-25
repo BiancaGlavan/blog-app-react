@@ -17,7 +17,7 @@ export interface IArticle {
     _id?: string;
     name: string;
     subscribers: number;
-  }
+  };
   createdAt?: string;
   updatedAt?: Date;
   tags: string[];
@@ -52,12 +52,12 @@ export interface ICategory {
   articles: string[];
 }
 
-interface IArticlePayload {
-    category: string;
-    _id?: string;
-    title: string;
-    image?: string;
-    description: string;
+export interface IArticlePayload {
+  category: string;
+  _id?: string;
+  title: string;
+  image?: string;
+  description: string;
 }
 
 interface ICreateCategoryResponse {
@@ -100,7 +100,7 @@ export const backendApi = createApi({
           method: "POST",
           body: category,
         };
-      }
+      },
     }),
     updateCategory: builder.mutation<ICreateCategoryResponse, { category: ICategoryPayload; id: string }>({
       query({ category, id }) {
@@ -109,7 +109,7 @@ export const backendApi = createApi({
           method: "PUT",
           body: category,
         };
-      }
+      },
     }),
     loginUser: builder.mutation<ILoginResponse, { data: Partial<IUser> }>({
       query: ({ data }) => ({
@@ -136,9 +136,9 @@ export const backendApi = createApi({
     }),
     getArticleById: builder.query<IArticle, number | string>({
       query: (articleId: number | string) => `articles/${articleId}`,
-    }), 
+    }),
     getCategoryArticles: builder.query<IArticlesResponse, number | string>({
-      query: (categoryId: number | string) => `categories/${categoryId}/articles`
+      query: (categoryId: number | string) => `categories/${categoryId}/articles`,
     }),
     uploadImage: builder.mutation<string, FormData>({
       query: (data) => ({
