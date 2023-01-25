@@ -9,11 +9,12 @@ import AdminPage from "./pages/adminPages/AdminPage";
 import AdminUsersPage from "./pages/adminPages/AdminUsersPage";
 import ArticlesByCategory from "./pages/ArticlesByCategory";
 import ArticlesPage from "./pages/ArticlesPage";
-import EditorPage from "./pages/EditorPage";
+import AddArticlePage from "./pages/AddArticlePage";
 import Homepage from "./pages/Homepage";
 import ProfilePage from "./pages/ProfilePage";
 import SingleArticlePage from "./pages/SingleArticlePage";
 import blogTheme from "./theme/blogTheme";
+import AdminEditArticlePage from "./pages/adminPages/AdminEditArticlePage";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/categories/:id/articles" element={<ArticlesByCategory />} />
-            <Route path="/editor" element={<EditorPage />} />
+            <Route path="/articles/add" element={<AddArticlePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/articles/:id" element={<SingleArticlePage />} />
           </Route>
@@ -33,6 +34,9 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/admin/categories" element={<AdminCategoriesPage />} />
             <Route path="/admin/articles" element={<AdminArticlesPage />} />
+            <Route path="/admin/articles/add" element={<AddArticlePage />} />
+            <Route path="/admin/articles/:id/edit" element={<AdminEditArticlePage />} />
+
             <Route path="/admin/users" element={<AdminUsersPage />} />
           </Route>
         </Routes>
