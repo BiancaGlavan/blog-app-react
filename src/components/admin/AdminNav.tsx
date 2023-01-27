@@ -1,4 +1,4 @@
-import { Typography, useTheme, useMediaQuery, IconButton, Drawer, Box } from "@mui/material";
+import { Typography, useTheme, useMediaQuery, IconButton, Drawer, Box, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/features/authSlice";
@@ -8,12 +8,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import AdminSidebar from "./AdminSidebar";
 
-const StyledAdminNav = styled("div")`
+const StyledAdminNav = styled(Paper)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid #e0d1c3;
 
   .nav-left {
     display: flex;
@@ -48,7 +47,7 @@ const AdminNav = () => {
   };
 
   return (
-    <StyledAdminNav className="AdminNav">
+    <StyledAdminNav className="AdminNav" variant="outlined" square>
      
       <Box className="nav-left">
         {isMobile && (

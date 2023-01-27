@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ArticleIcon from "@mui/icons-material/Article";
 import HomeIcon from "@mui/icons-material/Home";
@@ -6,50 +6,62 @@ import CategoryIcon from "@mui/icons-material/Category";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { Link } from "react-router-dom";
 
-const StyledAdminSidebar = styled("div")`
-  width: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border-right: 1px solid #e0d1c3;
+const StyledAdminSidebar = styled(Paper)`
+  width: 280px; 
   height: 100vh;
-  
 
-  .sidebar-btn {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    width: 90%;
-  }
-
-  .link {
-    width: 100%;
+  .list {
+    position: sticky;
+    top: 0;
+    padding-top: 70px;
   }
 `;
 
 const AdminSidebar = () => {
   return (
-    <StyledAdminSidebar className="AdminSidebar">
-      <Link className="link" to={"/admin"}>
-        <Button className="sidebar-btn" startIcon={<HomeIcon />}>
-          Dashboard
-        </Button>
-      </Link>
-      <Link className="link" to={"/admin/categories"}>
-        <Button className="sidebar-btn" startIcon={<CategoryIcon />}>
-          Categories
-        </Button>
-      </Link>
-      <Link className="link" to={"/admin/articles"}>
-        <Button className="sidebar-btn" startIcon={<ArticleIcon />}>
-          Articles
-        </Button>
-      </Link>
-      <Link className="link" to={"/admin/users"}>
-        <Button className="sidebar-btn" startIcon={<AccountBoxIcon />}>
-          Users
-        </Button>
-      </Link>
+    <StyledAdminSidebar variant="outlined" square className="AdminSidebar">
+      <List className="list" sx={{ width: "100%" }}>
+        <Link className="link" to={"/admin"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link className="link" to={"/admin/categories"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="Categories" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link className="link" to={"/admin/articles"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ArticleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Articles" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link className="link" to={"/admin/users"}>
+        <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+      </List>
     </StyledAdminSidebar>
   );
 };
