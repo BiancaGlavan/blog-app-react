@@ -1,9 +1,6 @@
 import {
-  Alert,
-  Backdrop,
   Box,
   Button,
-  CircularProgress,
   Container,
   Dialog,
   DialogContent,
@@ -21,6 +18,7 @@ import { styled } from "@mui/material/styles";
 import { ICategory, useGetCategoriesQuery, useUpdateCategoryMutation, useCreateCategoryMutation } from "../../redux/features/apiSlice";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
+import AlertComponent from "../../components/admin/AlertComponent";
 
 const StyledAdminCategoriesPage = styled("div")`
   margin-top: 50px;
@@ -75,21 +73,20 @@ const AdminCategoriesPage = () => {
       title: catTitle,
     };
     updateCat({ category: newCategory, id: catId });
+    setOpen(false);
   };
 
   const handleCreateCategory = () => {
     const newCategory = {
      title: createCatTitle,
     };
-    console.log("newCategory", newCategory);
     createCategory({ category: newCategory });
-  }
+  };
 
   useEffect(() => {
-    if (isSuccesCreateCat) {
-      setIsCategoryCreated(true);
-      setCreateCatTitle('');
-    }
+  if (isSuccesCreateCat) {
+    setCreateCatTitle('');
+  }
   }, [createCatResponse]);
 
   return (
@@ -108,7 +105,8 @@ const AdminCategoriesPage = () => {
           <Button onClick={handleCreateCategory} className="add-new-cat" variant="outlined" startIcon={<AddIcon />}>
             New Category
           </Button>
-          {isCategoryCreated && <Alert severity="success">Category was created!</Alert>}
+          {isSuccesCreateCat && <AlertComponent alertTitle="Category was created!"/>}
+          {isSuccessUpdateCat && <AlertComponent alertTitle="Category was updated!"/>}
         </Box>
         {categories && isSuccess && (
           <TableContainer sx={{ maxWidth: 650, marginBottom: '50px' }} component={Paper} square>
@@ -123,7 +121,7 @@ const AdminCategoriesPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {categories.map((cat, idx) => (
+                {categories && categories.map((cat, idx) => (
                   <TableRow key={cat._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                     <TableCell component="th" scope="row">
                       {idx + 1}
@@ -162,7 +160,6 @@ const AdminCategoriesPage = () => {
               autoComplete="off"
             />
             <Button onClick={handleUpdateCategory}>Update category</Button>
-            {isSuccessUpdateCat && <Alert severity="success">Category was updated!</Alert>}
           </DialogContent>
         </Dialog>
       </Container>

@@ -57,8 +57,8 @@ const SingleArticlePage = () => {
                 {article?.title && article?.title}
               </Typography>
               <Box className="single-article-details">
-                <Typography variant="caption">by {article?.user.name}</Typography>
-                <Typography variant="caption">{article?.category.title}</Typography>
+                <Typography variant="caption">by {article?.user?.name}</Typography>
+                <Typography variant="caption">{article?.category?.title}</Typography>
                 <Typography variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
               </Box>
               <Typography variant="subtitle1">{parse(article?.description)}</Typography>

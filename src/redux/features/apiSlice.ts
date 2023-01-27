@@ -58,6 +58,7 @@ export interface IArticlePayload {
   title: string;
   image?: string;
   description: string;
+  user?: string;
 }
 
 interface ICreateCategoryResponse {
@@ -82,6 +83,7 @@ export const backendApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Profile", "Articles", "Categories"],
 
   endpoints: (builder) => ({
     createArticle: builder.mutation<ICreateArticleResponse, { article: IArticlePayload }>({
@@ -92,6 +94,7 @@ export const backendApi = createApi({
           body: article,
         };
       },
+      invalidatesTags: ["Articles"],
     }),
     createCategory: builder.mutation<ICreateCategoryResponse, { category: ICategoryPayload }>({
       query({ category }) {
@@ -101,6 +104,7 @@ export const backendApi = createApi({
           body: category,
         };
       },
+      invalidatesTags: ["Categories"],
     }),
     updateCategory: builder.mutation<ICreateCategoryResponse, { category: ICategoryPayload; id: string }>({
       query({ category, id }) {
@@ -110,6 +114,25 @@ export const backendApi = createApi({
           body: category,
         };
       },
+      invalidatesTags: ["Categories"],
+    }),
+    updateArticle: builder.mutation<ICreateArticleResponse, { article: IArticlePayload, id: string}>({
+      query({ article, id }) {
+        return {
+          url: `articles/${id}`,
+          method: "PUT",
+          body: article,
+        };
+      },
+      invalidatesTags: ["Articles"],
+    }),
+    deleteArticle: builder.mutation<IArticle, string>({
+      query: (articleId: string) => ({
+        url: `articles/${articleId}/delete`,
+        method: "DELETE",
+      }),
+      
+      invalidatesTags: ["Articles"],
     }),
     loginUser: builder.mutation<ILoginResponse, { data: Partial<IUser> }>({
       query: ({ data }) => ({
@@ -127,12 +150,15 @@ export const backendApi = createApi({
     }),
     getMyProfile: builder.query<IMyProfileResponse, {}>({
       query: () => "auth/profile",
+      providesTags: ["Profile"],
     }),
     getCategories: builder.query<ICategory[], void>({
       query: () => "categories",
+      providesTags: ["Categories"],
     }),
     getArticles: builder.query<IArticlesResponse, void>({
       query: () => "articles",
+      providesTags: ["Articles"],
     }),
     getArticleById: builder.query<IArticle, number | string>({
       query: (articleId: number | string) => `articles/${articleId}`,
@@ -161,6 +187,8 @@ export const {
   useGetCategoryArticlesQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
+  useUpdateArticleMutation,
+  useDeleteArticleMutation,
 } = backendApi;
 
 export default backendApi;
