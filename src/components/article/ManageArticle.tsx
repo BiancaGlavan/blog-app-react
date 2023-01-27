@@ -1,11 +1,7 @@
 import {
-  Alert,
-  Box,
   Button,
-  Collapse,
   FormControl,
   Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -18,7 +14,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageUnsplash from "../ImageUnsplash";
 import { useEffect, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
+import AlertComponent from "../admin/AlertComponent";
 
 interface IPropsManageArticle {
   article?: IArticlePayload;
@@ -27,6 +23,7 @@ interface IPropsManageArticle {
   isLoading?: boolean;
   articleSaved?: boolean;
   alertTitle: string;
+  textButton?: string;
 }
 
 const StyledManageArticle = styled("div")`
@@ -56,12 +53,12 @@ const ManageArticle = ({
   isLoading = false,
   articleSaved = false,
   alertTitle,
+  textButton = 'Add article'
 }: IPropsManageArticle) => {
   const [category, setCategory] = useState(article?.category || "");
   const [description, setDescription] = useState(article?.description || "");
   const [title, setTitle] = useState(article?.title || "");
   const [image, setImage] = useState(article?.image || "");
-  const [alertOpen, setAlertOpen] = useState(true);
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value);
@@ -90,27 +87,7 @@ const ManageArticle = ({
   return (
     <StyledManageArticle className="ManageArticle">
       {articleSaved && (
-        <Box sx={{ width: "100%", marginTop: "20px" }}>
-          <Collapse in={alertOpen}>
-            <Alert
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setAlertOpen(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-              sx={{ mb: 2 }}
-            >
-              {alertTitle}
-            </Alert>
-          </Collapse>
-        </Box>
+        <AlertComponent alertTitle={alertTitle}/>
       )}
       <Grid container spacing={10}>
         <Grid className="create-article" item xs={12} md={6}>
@@ -140,7 +117,7 @@ const ManageArticle = ({
         </Grid>
       </Grid>
       <Button disabled={isLoading} onClick={handleSubmit} variant="contained" size="large" className="btn-create">
-        {isLoading ? "loading..." : "Add article"}
+        {isLoading ? "loading..." : textButton}
       </Button>
     </StyledManageArticle>
   );

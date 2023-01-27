@@ -129,7 +129,7 @@ const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) =>
       <Box className={classNames("article-content", { isRow: isRow })}>
         <Box className="article-details">
           <Typography className="user detail" variant="caption">
-            by {article.user.name}
+            by {article.user?.name}
           </Typography>
           <Typography className="detail" variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
           <Link to={`/categories/${article.category._id}/articles`}>
