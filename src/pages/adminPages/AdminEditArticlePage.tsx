@@ -1,32 +1,54 @@
-import { TextField } from "@mui/material";
+import { Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetArticleByIdQuery } from "../../redux/features/apiSlice";
+import ManageArticle from "../../components/article/ManageArticle";
+import {
+  IArticlePayload,
+  useGetArticleByIdQuery,
+  useGetCategoriesQuery,
+  useUpdateArticleMutation,
+} from "../../redux/features/apiSlice";
 
-const StyledAdminEditArticlePage = styled("div")``;
+const StyledAdminEditArticlePage = styled(Container)``;
 
 const AdminEditArticlePage = () => {
   const { id } = useParams();
   const { data: article, isLoading, isFetching } = useGetArticleByIdQuery(id || "");
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
+  const articlePayload: IArticlePayload = {
+    category: article?.category._id || "",
+    title: article?.title || "",
+    description: article?.description || "",
+    image: article?.image || '',
+  };
 
-  useEffect(() => {
-    if(article) {
-    //   setIsArticleCreated(true);
-    //   setDescription('');
-    //   setCategory('');
-      setTitle(article.title);
-    //   setImage('');
+  const [updateArticle, response] = useUpdateArticleMutation();
+  const { isLoading: isLoadingUpdateArticle, isSuccess: isSuccesUpdateArticle } = response;
+
+  const { data: categories, isLoading: isLoadingCategories } = useGetCategoriesQuery();
+
+  const handleUpdateArticle = (newArticle: IArticlePayload) => {
+    if (isLoadingUpdateArticle) {
+      return;
     }
-
-  }, [article]);
+    updateArticle({ article: newArticle, id: id || "" });
+  };
 
   return (
     <StyledAdminEditArticlePage className="AdminEditArticlePage">
-       {isLoading && 'is loading...'}
-       
+      {article && !isFetching && (
+        <ManageArticle
+          articleSaved={isSuccesUpdateArticle}
+          onSubmit={handleUpdateArticle}
+          isLoading={isLoadingUpdateArticle}
+          categories={categories || []}
+          alertTitle="Your article was updated!"
+          article={articlePayload}
+          textButton="Update article"
+        />
+      )}
     </StyledAdminEditArticlePage>
   );
 };
