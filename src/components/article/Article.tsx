@@ -133,7 +133,7 @@ const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) =>
           </Typography>
           <Typography className="detail" variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
           <Link to={`/categories/${article.category._id}/articles`}>
-          <Button className="detail cat" >{article.category.title}</Button>
+          <Typography className="detail cat" >{article.category.title}</Typography>
           </Link>
         </Box>
         <Link to={`/articles/${article._id}`}>
