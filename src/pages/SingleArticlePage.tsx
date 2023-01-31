@@ -1,9 +1,12 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
-import { useGetArticleByIdQuery, useGetCategoryArticlesQuery } from "../redux/features/apiSlice";
+import { useGetArticleByIdQuery, useGetCategoryArticlesQuery, useLikeArticleMutation } from "../redux/features/apiSlice";
 import parse from "html-react-parser";
 import Article from "../components/article/Article";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useAppSelector } from "../redux/hooks";
 
 const StyledSingleArticlePage = styled(Container)`
   margin-top: 80px;
@@ -21,6 +24,7 @@ const StyledSingleArticlePage = styled(Container)`
     margin-top: 10px;
     margin-bottom: 30px;
     text-transform: uppercase;
+    align-items: center;
   }
 
   .single-article-related {
@@ -35,6 +39,10 @@ const StyledSingleArticlePage = styled(Container)`
   .related-article {
     margin-bottom: 30px;
   }
+
+  .icon {
+    color: ${(props) => props.theme.palette.primary.main};
+  }
 `;
 
 const SingleArticlePage = () => {
@@ -46,11 +54,22 @@ const SingleArticlePage = () => {
     isFetching: categoryArticlesIsFetching,
   } = useGetCategoryArticlesQuery(article?.category._id || "", { skip: !article?.category._id });
 
+  const authState = useAppSelector(state => state.auth);
+
+  const [likeArticle, response] = useLikeArticleMutation();
+  const { isLoading: isLoadingLike, isSuccess: isSuccessLike } = response;
+
+  const handleLike = () => {
+    if(article && article._id) {
+      likeArticle(article._id);
+    }
+  }
+
   return (
     <StyledSingleArticlePage>
       <Grid container spacing={10}>
         <Grid item xs={12} md={9}>
-          {!isLoading && !isFetching && article && (
+          {!isLoading && article && (
             <>
               <img className="single-article-img" src={article?.image} />
               <Typography className="single-article-title" variant="h5">
@@ -60,6 +79,10 @@ const SingleArticlePage = () => {
                 <Typography variant="caption">by {article?.user?.name}</Typography>
                 <Typography variant="caption">{article?.category?.title}</Typography>
                 <Typography variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
+                <IconButton onClick={handleLike} className="icon">
+                 {article.likes.includes(authState.user?._id || "") ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </IconButton>
+                <Typography variant="caption">{article.likes.length} likes</Typography>
               </Box>
               <Typography variant="subtitle1">{parse(article?.description)}</Typography>
             </>

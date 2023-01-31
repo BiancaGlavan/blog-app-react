@@ -70,6 +70,10 @@ interface ICategoryPayload {
   image?: string;
 }
 
+interface ILikeArticleResponse {
+  message: string;
+}
+
 export const backendApi = createApi({
   reducerPath: "backendapi",
   baseQuery: fetchBaseQuery({
@@ -83,7 +87,7 @@ export const backendApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Profile", "Articles", "Categories"],
+  tagTypes: ["Profile", "Articles", "Categories", "Article"],
 
   endpoints: (builder) => ({
     createArticle: builder.mutation<ICreateArticleResponse, { article: IArticlePayload }>({
@@ -127,12 +131,21 @@ export const backendApi = createApi({
       invalidatesTags: ["Articles"],
     }),
     deleteArticle: builder.mutation<IArticle, string>({
-      query: (articleId: string) => ({
+      query: (articleId) => ({
         url: `articles/${articleId}/delete`,
         method: "DELETE",
       }),
       
       invalidatesTags: ["Articles"],
+    }),
+    likeArticle: builder.mutation<ILikeArticleResponse, string>({
+      query( articleId ) {
+        return {
+          url: `articles/like/${articleId}`,
+          method: "POST",
+        };
+      },
+      invalidatesTags: ["Article"],
     }),
     loginUser: builder.mutation<ILoginResponse, { data: Partial<IUser> }>({
       query: ({ data }) => ({
@@ -162,6 +175,7 @@ export const backendApi = createApi({
     }),
     getArticleById: builder.query<IArticle, number | string>({
       query: (articleId: number | string) => `articles/${articleId}`,
+      providesTags: ["Article"]
     }),
     getCategoryArticles: builder.query<IArticlesResponse, number | string>({
       query: (categoryId: number | string) => `categories/${categoryId}/articles`,
@@ -189,6 +203,7 @@ export const {
   useUpdateCategoryMutation,
   useUpdateArticleMutation,
   useDeleteArticleMutation,
+  useLikeArticleMutation,
 } = backendApi;
 
 export default backendApi;
