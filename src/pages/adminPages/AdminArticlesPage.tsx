@@ -11,7 +11,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -21,20 +20,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { IArticle, useDeleteArticleMutation, useGetArticlesQuery } from "../../redux/features/apiSlice";
 import { useState } from "react";
 import AlertComponent from "../../components/admin/AlertComponent";
+import PaginationForTable from "../../components/admin/PaginationForTable";
 
 const StyledAdminArticlesPage = styled("div")`
   margin-top: 50px;
 
+  .title {
+    text-align: center;
+  }
+
   .title,
   .new-art-btn {
     margin-bottom: 30px;
-  }
-
-  .table-pagination {
-    display: flex;
-    justify-content: flex-start;
-    max-width: 650px;
-    margin-bottom: 50px;
   }
 
   .divider {
@@ -51,8 +48,6 @@ const StyledDialog = styled(Dialog)`
 `;
 
 const AdminArticlesPage = () => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [artId, setArtId] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [artTitle, setArtTitle] = useState("");
@@ -63,15 +58,6 @@ const AdminArticlesPage = () => {
   const { isLoading: isLoadingDeleteArticle, isSuccess: isSuccesDeleteArticle } = response;
 
   const navigate = useNavigate();
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   const handleEditOpen = (art: IArticle) => {
     setArtId(art?._id);
@@ -97,11 +83,11 @@ const AdminArticlesPage = () => {
   };
 
   //article id to delete
- // 63b336b2647dd2918c3f21e1
- // 63b337d6e6b012c6b4953cec
- // 63b47d844c3db2538aa51217
- // 63c16563edd4db65f58c1e14
- // 63b339f799bfb21234c18f13
+  // 63b336b2647dd2918c3f21e1
+  // 63b337d6e6b012c6b4953cec
+  // 63b47d844c3db2538aa51217
+  // 63c16563edd4db65f58c1e14
+  // 63b339f799bfb21234c18f13
 
   return (
     <StyledAdminArticlesPage>
@@ -110,7 +96,7 @@ const AdminArticlesPage = () => {
           Manage Articles
         </Typography>
         <Link to={"/admin/articles/add"}>
-          <Button className="new-art-btn" variant="outlined" startIcon={<AddIcon />}>
+          <Button className="new-art-btn" variant="contained" size="large" startIcon={<AddIcon />}>
             New Article
           </Button>
         </Link>
@@ -121,11 +107,11 @@ const AdminArticlesPage = () => {
               <Table size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Nr.</TableCell>
+                    {/* <TableCell>Nr.</TableCell> */}
                     <TableCell align="left">Article</TableCell>
                     <TableCell align="left">Category</TableCell>
                     <TableCell align="left">Author</TableCell>
-                    <TableCell align="left">Likes</TableCell>
+                    {/* <TableCell align="left">Likes</TableCell> */}
                     <TableCell align="left">Action</TableCell>
                     <TableCell align="left">Action</TableCell>
                   </TableRow>
@@ -133,13 +119,13 @@ const AdminArticlesPage = () => {
                 <TableBody>
                   {articlesResponse.articles.map((art, idx) => (
                     <TableRow key={art._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                      <TableCell component="th" scope="row">
+                      {/* <TableCell component="th" scope="row">
                         {idx + 1}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="left">{art.title}</TableCell>
-                      <TableCell align="center">{art.category?.title}</TableCell>
-                      <TableCell align="center">{art.user?.name}</TableCell>
-                      <TableCell align="center">{art.likes.length}</TableCell>
+                      <TableCell align="left">{art.category?.title}</TableCell>
+                      <TableCell align="left">{art.user?.name}</TableCell>
+                      {/* <TableCell align="center">{art.likes.length}</TableCell> */}
                       <TableCell align="left">
                         <Button onClick={() => handleEditOpen(art)} className="action-btn" size="small" color="warning">
                           Edit
@@ -157,18 +143,7 @@ const AdminArticlesPage = () => {
             </TableContainer>
 
             <Divider className="divider" />
-
-            <TablePagination
-              className="table-pagination"
-              rowsPerPageOptions={[10, 25, 100]}
-              component={Paper}
-              square
-              count={(articlesResponse?.articles && articlesResponse?.articles.length) || -1}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+            <PaginationForTable raws={articlesResponse?.articles && articlesResponse?.articles.length} />
           </>
         )}
         <StyledDialog open={openDialog} onClose={() => setOpenDialog(false)}>
