@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -10,7 +10,9 @@ import {
   useUpdateArticleMutation,
 } from "../../redux/features/apiSlice";
 
-const StyledAdminEditArticlePage = styled(Container)``;
+const StyledAdminEditArticlePage = styled(Container)`
+margin-top: 80px;
+`;
 
 const AdminEditArticlePage = () => {
   const { id } = useParams();
@@ -38,6 +40,7 @@ const AdminEditArticlePage = () => {
 
   return (
     <StyledAdminEditArticlePage className="AdminEditArticlePage">
+      <Typography variant="h5">Edit article</Typography>
       {article && !isFetching && (
         <ManageArticle
           articleSaved={isSuccesUpdateArticle}

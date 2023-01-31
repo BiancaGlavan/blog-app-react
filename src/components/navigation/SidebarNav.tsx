@@ -38,9 +38,9 @@ const SidebarNav = () => {
             Articles
           </Typography>
         </Link>
-        <Link to={"/categories"}>
+        <Link to={"/"}>
           <Typography className="link" variant="subtitle1">
-            Categories
+            Home
           </Typography>
         </Link>
         {!authState.isAuth && (

@@ -8,12 +8,18 @@ import { Link } from "react-router-dom";
 
 const StyledAdminSidebar = styled(Paper)`
   width: 280px; 
-  height: 100vh;
+  min-height: 100vh;
+  background: ${(props) => props.theme.palette.secondary.main};
 
   .list {
     position: sticky;
     top: 0;
     padding-top: 70px;
+  }
+
+  .list-item {
+    color: #fff;
+
   }
 `;
 
@@ -24,40 +30,40 @@ const AdminSidebar = () => {
         <Link className="link" to={"/admin"}>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className="list-item">
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText className="list-item" primary="Dashboard" />
             </ListItemButton>
           </ListItem>
         </Link>
         <Link className="link" to={"/admin/categories"}>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className="list-item">
                 <CategoryIcon />
               </ListItemIcon>
-              <ListItemText primary="Categories" />
+              <ListItemText className="list-item" primary="Categories" />
             </ListItemButton>
           </ListItem>
         </Link>
         <Link className="link" to={"/admin/articles"}>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className="list-item">
                 <ArticleIcon />
               </ListItemIcon>
-              <ListItemText primary="Articles" />
+              <ListItemText className="list-item" primary="Articles" />
             </ListItemButton>
           </ListItem>
         </Link>
         <Link className="link" to={"/admin/users"}>
         <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className="list-item">
                 <AccountBoxIcon />
               </ListItemIcon>
-              <ListItemText primary="Users" />
+              <ListItemText className="list-item" primary="Users" />
             </ListItemButton>
           </ListItem>
         </Link>

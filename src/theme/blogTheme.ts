@@ -14,12 +14,14 @@ const blogTheme = createTheme({
             main: "#BB5A3A",
         },
         secondary: {
-            main: "#e0d1c3"
+            main: "#58524d"
         }
     },
     typography : {
         fontFamily: "Poppins",
     }
 });
+
+//#a9927d
 
 export default blogTheme;

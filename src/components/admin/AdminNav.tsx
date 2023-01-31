@@ -13,6 +13,7 @@ const StyledAdminNav = styled(Paper)`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  background: ${(props) => props.theme.palette.secondary.main};
 
   .nav-left {
     display: flex;
@@ -20,7 +21,9 @@ const StyledAdminNav = styled(Paper)`
     gap: 10px;
   }
 
-  .logo {
+  .go-back {
+    font-weight: 500;
+    color: #fff;
     &:hover {
       color: ${(props) => props.theme.palette.primary.main};
     }
@@ -51,13 +54,13 @@ const AdminNav = () => {
      
       <Box className="nav-left">
         {isMobile && (
-          <IconButton onClick={handleDrawerToggle}>
+          <IconButton sx={{color: '#fff'}} onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
         )}
 
         <Link to={"/"}>
-          <Typography className="logo" variant="subtitle1">
+          <Typography className="go-back" variant="subtitle1">
             Go to website
           </Typography>
         </Link>
