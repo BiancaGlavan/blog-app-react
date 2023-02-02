@@ -7,6 +7,8 @@ import Article from "../components/article/Article";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAppSelector } from "../redux/hooks";
+import Comment from "../components/comments/Comment";
+import CommentsList from "../components/comments/CommentsList";
 
 const StyledSingleArticlePage = styled(Container)`
   margin-top: 80px;
@@ -42,6 +44,10 @@ const StyledSingleArticlePage = styled(Container)`
 
   .icon {
     color: ${(props) => props.theme.palette.primary.main};
+  }
+
+  .article-desc {
+    font-family: ${(props) => props.theme.typography.fontFamily};
   }
 `;
 
@@ -84,7 +90,7 @@ const SingleArticlePage = () => {
                 </IconButton>
                 <Typography variant="caption">{article.likes.length} likes</Typography>
               </Box>
-              <Typography variant="subtitle1">{parse(article?.description)}</Typography>
+              <Typography className="article-desc" variant="subtitle1">{parse(article?.description)}</Typography>
             </>
           )}
         </Grid>
@@ -105,6 +111,7 @@ const SingleArticlePage = () => {
             ))}
         </Grid>
       </Grid>
+      <CommentsList />
     </StyledSingleArticlePage>
   );
 };
