@@ -71,13 +71,15 @@ const Sidebar = () => {
         </Box>
         <Box className="about-me">
           <Typography className="aboutme-info" variant="body1">
-            Welcome to my blog! I'm Bianca and and I'm a writer who's passionate about photography, traveling, writing,
-            and reading.
+            Welcome to my blog! I'm Bianca and I'm a writer who's passionate about photography, traveling, writing,
+            and reading. As a writer, I strive to create content that's engaging, informative, and thought-provoking.
           </Typography>
           {!isMobile && (
             <>
               <Typography className="aboutme-info" variant="body1">
-                As a writer, I strive to create content that's engaging, informative, and thought-provoking.
+                I've always been fascinated by the power of images to tell stories, which is why photography has become
+                one of my greatest loves. Whether I'm capturing the beauty of a landscape or the emotions of a person, I
+                strive to create images that evoke a sense of wonder and curiosity.
               </Typography>
               <Typography className="aboutme-info" variant="body1">
                 In this blog, I'll be sharing my thoughts and experiences on all of these topics and more. Whether
@@ -86,7 +88,6 @@ const Sidebar = () => {
               </Typography>
             </>
           )}
-          <Link to={`/articles/add`}><Button className="aboutme-btn" variant="contained" size="large">Write</Button></Link>
         </Box>
       </Box>
     </StyledSidebar>

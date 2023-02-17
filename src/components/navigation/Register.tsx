@@ -16,6 +16,7 @@ import { useRegisterUserMutation } from "../../redux/features/apiSlice";
 const StyledRegister = styled("div")`
   .register-btn {
     border-radius: 0;
+    font-weight: 600;
   }
 `;
 
@@ -73,7 +74,7 @@ const Register = () => {
 
   return (
     <StyledRegister className="Register">
-      <Button className="register-btn" variant="contained" onClick={handleClickOpen}>
+      <Button className="register-btn" onClick={handleClickOpen}>
         Register
       </Button>
       <Dialog open={open} onClose={handleClose}>

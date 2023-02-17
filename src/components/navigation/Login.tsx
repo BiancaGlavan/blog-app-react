@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 const StyledLogin = styled("div")`
   .login-btn {
+    font-weight: 600;
     color: ${(props) => props.theme.palette.text.primary};
 
     &:hover {
