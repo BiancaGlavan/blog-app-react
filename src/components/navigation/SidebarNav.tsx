@@ -16,6 +16,7 @@ const StyledSidebarNav = styled("div")`
   }
 
   .link {
+    font-weight: 500;
     &:hover {
       color: ${(props) => props.theme.palette.primary.main};
     }

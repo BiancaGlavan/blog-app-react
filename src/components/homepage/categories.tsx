@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Box, Button, IconButton, Menu } from "@mui/material";
+import { Box, Button, IconButton, Menu, useTheme, useMediaQuery } from "@mui/material";
 import { useGetCategoriesQuery } from "../../redux/features/apiSlice";
 import { Link } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -50,6 +50,9 @@ const Categories = () => {
   const { data: categories, isLoading } = useGetCategoriesQuery();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -60,8 +63,14 @@ const Categories = () => {
 
   return (
     <StyledCategories className="Categories">
-      {categories &&
+      {categories && !isMobile &&
         categories?.slice(0, 3).map((category) => (
+          <Link key={category._id} to={`/categories/${category._id}/articles`}>
+            <Button className="cat"> {category.title}</Button>
+          </Link>
+        ))}
+         {categories && isMobile &&
+        categories?.slice(0, 2).map((category) => (
           <Link key={category._id} to={`/categories/${category._id}/articles`}>
             <Button className="cat"> {category.title}</Button>
           </Link>
@@ -98,7 +107,12 @@ const Categories = () => {
                   gap: "10px",
                 }}
               >
-                {categories.slice(3).map((category) => (
+                {!isMobile && categories.slice(3).map((category) => (
+                  <Link key={category._id} to={`/categories/${category._id}/articles`}>
+                    <Button className="cat"> {category.title}</Button>
+                  </Link>
+                ))}
+                 {isMobile && categories.slice(2).map((category) => (
                   <Link key={category._id} to={`/categories/${category._id}/articles`}>
                     <Button className="cat"> {category.title}</Button>
                   </Link>

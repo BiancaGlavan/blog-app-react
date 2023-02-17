@@ -1,4 +1,4 @@
-import { Box, Button, Grid, useMediaQuery } from "@mui/material";
+import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
@@ -40,6 +40,10 @@ const StyledHomePage = styled("div")`
       margin-bottom: 50px;
       border-radius: 0;
     }
+
+    .text {
+      margin-bottom: 20px;
+    }
   }
 `;
 
@@ -63,6 +67,9 @@ const Homepage = () => {
         <Grid container spacing={12}>
           <Grid item xs={12} md={12} lg={6}>
             <Box className="homepage-articles">
+              <Typography variant="h6" className="text">
+                Recent articles
+              </Typography>
               {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
                 <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} isRow={true} />
               )}

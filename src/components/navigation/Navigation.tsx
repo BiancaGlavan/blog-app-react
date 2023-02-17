@@ -23,8 +23,10 @@ const StyledNavigation = styled("div")`
     display: flex;
     gap: 20px;
     align-items: center;
+    
 
     .menu-link {
+      font-weight: 500;
       &:hover {
         color: ${(props) => props.theme.palette.primary.main};
       }
@@ -32,6 +34,7 @@ const StyledNavigation = styled("div")`
   }
 
   .logo {
+    font-weight: 500;
     &:hover {
       color: ${(props) => props.theme.palette.primary.main};
     }
