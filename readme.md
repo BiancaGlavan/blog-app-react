@@ -30,4 +30,7 @@
 - Mongoose
 
 
+### Backend
+
+- Repository: [github.com/BiancaGlavan/rest-api-blog-backend](https://github.com/BiancaGlavan/rest-api-blog-backend)
 
