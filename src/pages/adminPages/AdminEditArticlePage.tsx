@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import ManageArticle from "../../components/article/ManageArticle";
+import NavigateBack from "../../components/navigation/NavigateBack";
 import {
   IArticlePayload,
   useGetArticleByIdQuery,
@@ -40,6 +41,7 @@ const AdminEditArticlePage = () => {
 
   return (
     <StyledAdminEditArticlePage className="AdminEditArticlePage">
+      <NavigateBack />
       <Typography variant="h5">Edit article</Typography>
       {article && !isFetching && (
         <ManageArticle
