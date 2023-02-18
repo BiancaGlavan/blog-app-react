@@ -138,6 +138,13 @@ export const backendApi = createApi({
       
       invalidatesTags: ["Articles"],
     }),
+    deleteCategory: builder.mutation<ICategory, string>({
+      query: (categoryId) => ({
+        url: `categories/${categoryId}/delete`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Categories"],
+    }),
     likeArticle: builder.mutation<ILikeArticleResponse, string>({
       query( articleId ) {
         return {
@@ -204,6 +211,7 @@ export const {
   useUpdateArticleMutation,
   useDeleteArticleMutation,
   useLikeArticleMutation,
+  useDeleteCategoryMutation,
 } = backendApi;
 
 export default backendApi;

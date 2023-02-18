@@ -21,6 +21,7 @@ import {
   useGetCategoriesQuery,
   useUpdateCategoryMutation,
   useCreateCategoryMutation,
+  useDeleteCategoryMutation,
 } from "../../redux/features/apiSlice";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
@@ -37,7 +38,6 @@ const StyledAdminCategoriesPage = styled("div")`
   .title {
     text-align: center;
     margin-bottom: 30px;
-  
   }
 
   .new-cat {
@@ -54,8 +54,16 @@ const StyledAdminCategoriesPage = styled("div")`
   }
 `;
 
+const StyledDialog = styled(Dialog)`
+  .delete-buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+`;
+
 const AdminCategoriesPage = () => {
-  const [open, setOpen] = useState(false);
+  const [openDialogEdit, setOpenDialogEdit] = useState(false);
+  const [openDialogDelete, setOpenDialogDelete] = useState(false);
   const [catId, setCatId] = useState("");
   const [catTitle, setCatTitle] = useState("");
   const [createCatTitle, setCreateCatTitle] = useState("");
@@ -68,14 +76,27 @@ const AdminCategoriesPage = () => {
   const [createCategory, createCatResponse] = useCreateCategoryMutation();
   const { isLoading: isLoadingCreateCat, isSuccess: isSuccesCreateCat } = createCatResponse;
 
+  const [deleteCategory, deleteCatRes] = useDeleteCategoryMutation();
+  const { isLoading: isLoadingDeleteCategory, isSuccess: isSuccesDeleteCategory } = deleteCatRes;
+
   const handleEditOpen = (cat: ICategory) => {
     setCatId(cat?._id);
     setCatTitle(cat.title);
-    setOpen(true);
+    setOpenDialogEdit(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleDeleteOpen = (cat: ICategory) => {
+    setCatId(cat?._id);
+    setCatTitle(cat.title);
+    setOpenDialogDelete(true);
+  };
+
+  const handleCloseEdit = () => {
+    setOpenDialogEdit(false);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDialogDelete(false);
   };
 
   const handleUpdateCategory = () => {
@@ -83,7 +104,7 @@ const AdminCategoriesPage = () => {
       title: catTitle,
     };
     updateCat({ category: newCategory, id: catId });
-    setOpen(false);
+    setOpenDialogEdit(false);
   };
 
   const handleCreateCategory = () => {
@@ -91,6 +112,18 @@ const AdminCategoriesPage = () => {
       title: createCatTitle,
     };
     createCategory({ category: newCategory });
+  };
+
+  const handleDeleteCategory = async () => {
+    try {
+      const deletedCategory = await deleteCategory(catId).unwrap();
+
+      if (deletedCategory) {
+        setOpenDialogDelete(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -123,14 +156,14 @@ const AdminCategoriesPage = () => {
           </Button>
           {isSuccesCreateCat && <AlertComponent alertTitle="Category was created!" />}
           {isSuccessUpdateCat && <AlertComponent alertTitle="Category was updated!" />}
+          {isSuccesDeleteCategory && <AlertComponent alertTitle="Category was deleted!" />}
         </Box>
         {categories && isSuccess && (
           <>
-            <TableContainer sx={{ maxWidth: 650, }} component={Paper} square>
+            <TableContainer sx={{ maxWidth: 650 }} component={Paper} square>
               <Table size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    {/* <TableCell>Nr.</TableCell> */}
                     <TableCell align="left">Category</TableCell>
                     <TableCell align="left">Nr. of Articles</TableCell>
                     <TableCell align="left">Action</TableCell>
@@ -141,9 +174,6 @@ const AdminCategoriesPage = () => {
                   {categories &&
                     categories.map((cat, idx) => (
                       <TableRow key={cat._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                        {/* <TableCell component="th" scope="row">
-                      {idx + 1}
-                    </TableCell> */}
                         <TableCell align="left">{cat.title}</TableCell>
                         <TableCell align="left">{cat.articles.length}</TableCell>
                         <TableCell align="left">
@@ -157,7 +187,7 @@ const AdminCategoriesPage = () => {
                           </Button>
                         </TableCell>
                         <TableCell align="left">
-                          <Button size="small" color="error">
+                          <Button onClick={() => handleDeleteOpen(cat)} size="small" color="error">
                             Delete
                           </Button>
                         </TableCell>
@@ -167,10 +197,10 @@ const AdminCategoriesPage = () => {
               </Table>
             </TableContainer>
             <Divider className="divider" />
-            <PaginationForTable raws={categories && categories.length}/>
+            <PaginationForTable raws={categories && categories.length} />
           </>
         )}
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={openDialogEdit} onClose={handleCloseEdit}>
           <DialogContent sx={{ display: "flex", flexDirection: "column", gap: "20px", padding: "30px" }}>
             <TextField
               value={catTitle}
@@ -180,10 +210,22 @@ const AdminCategoriesPage = () => {
               autoComplete="off"
             />
             <Button sx={{ marginTop: "20px", marginBottom: "20px" }} variant="contained" onClick={handleUpdateCategory}>
-              Update category
+              {isLoadingUpdateCat ? "is loading" : "Update Category"}
             </Button>
           </DialogContent>
         </Dialog>
+
+        <StyledDialog open={openDialogDelete} onClose={handleCloseDelete}>
+          <DialogContent sx={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px" }}>
+            <Typography variant="body1">Are you sure you want to delete category: "{catTitle}"?</Typography>
+            <Box className="delete-buttons">
+              <Button onClick={handleCloseDelete}>Close</Button>
+              <Button onClick={handleDeleteCategory} variant="contained" color="error">
+                {isLoadingDeleteCategory ? "is loading...": "Delete Category"}
+              </Button>
+            </Box>
+          </DialogContent>
+        </StyledDialog>
       </Container>
     </StyledAdminCategoriesPage>
   );

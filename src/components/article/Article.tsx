@@ -52,6 +52,7 @@ const StyledArticle = styled("div")`
 
     .article-title {
       cursor: pointer;
+      font-weight: 600;
       &:hover {
         color: ${(props) => props.theme.palette.primary.main};
       }
@@ -137,11 +138,11 @@ const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) =>
           </Link>
         </Box>
         <Link to={`/articles/${article._id}`}>
-          <Typography className="article-title" variant="h6">
+          <Typography className="article-title" variant="subtitle1">
             {article.title}
           </Typography>
         </Link>
-        <Typography className="article-desc" variant="body1" component='div'>
+        <Typography className="article-desc" variant="body2" component='div'>
           {parse(article?.description)}
         </Typography>
       </Box>

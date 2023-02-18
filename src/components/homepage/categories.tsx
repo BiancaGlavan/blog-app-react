@@ -63,13 +63,15 @@ const Categories = () => {
 
   return (
     <StyledCategories className="Categories">
-      {categories && !isMobile &&
+      {categories &&
+        !isMobile &&
         categories?.slice(0, 3).map((category) => (
           <Link key={category._id} to={`/categories/${category._id}/articles`}>
             <Button className="cat"> {category.title}</Button>
           </Link>
         ))}
-         {categories && isMobile &&
+      {categories &&
+        isMobile &&
         categories?.slice(0, 2).map((category) => (
           <Link key={category._id} to={`/categories/${category._id}/articles`}>
             <Button className="cat"> {category.title}</Button>
@@ -107,21 +109,24 @@ const Categories = () => {
                   gap: "10px",
                 }}
               >
-                {!isMobile && categories.slice(3).map((category) => (
-                  <Link key={category._id} to={`/categories/${category._id}/articles`}>
-                    <Button className="cat"> {category.title}</Button>
-                  </Link>
-                ))}
-                 {isMobile && categories.slice(2).map((category) => (
-                  <Link key={category._id} to={`/categories/${category._id}/articles`}>
-                    <Button className="cat"> {category.title}</Button>
-                  </Link>
-                ))}
+                {!isMobile &&
+                  categories?.slice(3).map((category) => (
+                    <Link key={category._id} to={`/categories/${category._id}/articles`}>
+                      <Button className="cat"> {category.title}</Button>
+                    </Link>
+                  ))}
+                  {isMobile &&
+                  categories.slice(2).map((category) => (
+                    <Link key={category._id} to={`/categories/${category._id}/articles`}>
+                      <Button className="cat"> {category.title}</Button>
+                    </Link>
+                  ))}
               </Box>
             </StyledCategoryMenu>
           </Box>
         </>
       )}
+    
     </StyledCategories>
   );
 };

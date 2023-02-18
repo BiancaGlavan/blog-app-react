@@ -109,6 +109,7 @@ const ManageArticle = ({
             label="Title"
             variant="outlined"
             type="text"
+            autoComplete="off"
           />
           <ReactQuill theme="snow" value={description} onChange={setDescription} className="editor-input" />
         </Grid>

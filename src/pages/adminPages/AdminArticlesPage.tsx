@@ -107,11 +107,9 @@ const AdminArticlesPage = () => {
               <Table size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    {/* <TableCell>Nr.</TableCell> */}
                     <TableCell align="left">Article</TableCell>
                     <TableCell align="left">Category</TableCell>
                     <TableCell align="left">Author</TableCell>
-                    {/* <TableCell align="left">Likes</TableCell> */}
                     <TableCell align="left">Action</TableCell>
                     <TableCell align="left">Action</TableCell>
                   </TableRow>
@@ -119,13 +117,9 @@ const AdminArticlesPage = () => {
                 <TableBody>
                   {articlesResponse.articles.map((art, idx) => (
                     <TableRow key={art._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                      {/* <TableCell component="th" scope="row">
-                        {idx + 1}
-                      </TableCell> */}
                       <TableCell align="left">{art.title}</TableCell>
                       <TableCell align="left">{art.category?.title}</TableCell>
                       <TableCell align="left">{art.user?.name}</TableCell>
-                      {/* <TableCell align="center">{art.likes.length}</TableCell> */}
                       <TableCell align="left">
                         <Button onClick={() => handleEditOpen(art)} className="action-btn" size="small" color="warning">
                           Edit
@@ -152,7 +146,7 @@ const AdminArticlesPage = () => {
             <Box className="delete-buttons">
               <Button onClick={() => setOpenDialog(false)}>Close</Button>
               <Button onClick={handleDeleteArticle} variant="contained" color="error">
-                Delete article
+                {isLoadingDeleteArticle ? "is loading..." : "Delete Article"}
               </Button>
             </Box>
           </DialogContent>
