@@ -1,6 +1,6 @@
 ### Links
 
-- Live Site URL: [https://lambent-treacle-cb712f.netlify.app/](https://lambent-treacle-cb712f.netlify.app/)
+- Live Site URL: [keep-the-pot-boiling-blog.netlify.app/](https://keep-the-pot-boiling-blog.netlify.app/)
 
 ### Screenshot
 
