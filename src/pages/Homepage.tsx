@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import HomepageArticlesList from "../components/article/HomepageArticlesList";
 import Sidebar from "../components/homepage/Sidebar";
-import Categories from "../components/homepage/Categories";
+import CategoriesList from "../components/homepage/CategoriesList";
 import { useGetArticlesQuery } from "../redux/features/apiSlice";
 
 const StyledHomePage = styled("div")`
@@ -61,7 +61,7 @@ const Homepage = () => {
   return (
     <StyledHomePage className="Homepage">
       <Box className="homepage-top">
-        <Categories />
+        <CategoriesList />
       </Box>
       <Box className="middle-section">
         <Grid container spacing={12}>

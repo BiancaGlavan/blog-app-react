@@ -49,7 +49,7 @@ const Navigation = () => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  const { data: userProfile, isSuccess } = useGetMyProfileQuery({}, { skip: !authState.isAuth });
+  const { data: userProfile, isSuccess, isError } = useGetMyProfileQuery({}, { skip: !authState.isAuth });
 
   const navigate = useNavigate();
 
@@ -69,6 +69,14 @@ const Navigation = () => {
       console.log("userProfile", userProfile);
     }
   }, [userProfile]);
+
+  useEffect(() => {
+
+    if (isError) {
+      dispatch(logout());
+    }
+
+  }, [isError])
 
   return (
     <StyledNavigation className="Navigation">

@@ -2,7 +2,7 @@ import { Box, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
-import Categories from "../components/homepage/Categories";
+import CategoriesList from "../components/homepage/CategoriesList";
 import { useGetArticleByIdQuery, useGetCategoryArticlesQuery } from "../redux/features/apiSlice";
 
 const StyledArticlesByCategory = styled(Container)`
@@ -16,7 +16,7 @@ const StyledArticlesByCategory = styled(Container)`
 
 const ArticlesByCategory = () => {
   const { id } = useParams();
-  const { data: article, isLoading, isFetching } = useGetArticleByIdQuery(id || "");
+
   const {
     data: categoryArticles,
     isLoading: categoryArticlesIsLoading,
@@ -26,7 +26,7 @@ const ArticlesByCategory = () => {
   return (
     <StyledArticlesByCategory>
       <Box className="categories">
-        <Categories />
+        <CategoriesList />
       </Box>
       
         {!categoryArticlesIsLoading && !categoryArticlesIsFetching && categoryArticles && (
