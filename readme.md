@@ -1,6 +1,6 @@
 ### Links
 
-- Live Site URL: [biancaglavan.github.io/portfolio/](https://biancaglavan.github.io/portfolio/)
+- Live Site URL: [https://lambent-treacle-cb712f.netlify.app/](https://lambent-treacle-cb712f.netlify.app/)
 
 ### Screenshot
 
