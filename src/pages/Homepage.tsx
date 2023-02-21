@@ -7,6 +7,9 @@ import Sidebar from "../components/homepage/Sidebar";
 import CategoriesList from "../components/homepage/CategoriesList";
 import { useGetArticlesQuery, useGetCategoriesQuery } from "../redux/features/apiSlice";
 import { useState } from "react";
+import CategoriesListSkeleton from "../components/skeletons/skeletonsComponents/CategoriesListSkeleton";
+import HomepageArticlesListSkeleton from "../components/skeletons/skeletonsComponents/HomepageArticlesListSkeleton";
+import ArticlesSkeletonList from "../components/skeletons/skeletonsComponents/ArticlesSkeletonList";
 
 const StyledHomePage = styled("div")`
   margin-top: 80px;
@@ -66,38 +69,45 @@ const Homepage = () => {
   return (
     <StyledHomePage className="Homepage">
       <Box className="homepage-top">
-        <CategoriesList activeCategoryId={id || ""} categories={categories || []}/>
+        {isLoadingCategories && <CategoriesListSkeleton />}
+        {categories && !isLoadingCategories && <CategoriesList activeCategoryId={id || ""} categories={categories || []}/>}
       </Box>
+   
       <Box className="middle-section">
-        <Grid container spacing={12}>
-          <Grid item xs={12} md={12} lg={6}>
-            <Box className="homepage-articles">
-              <Typography variant="h6" className="text">
-                Recent articles
-              </Typography>
-              {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
-                <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} isRow={true} />
-              )}
-              {articlesResponse && !isLoadingArticles && isTablete && !isMobile && (
-                <ArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
-              )}
-              {articlesResponse && !isLoadingArticles && isMobile && (
-                <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
-              )}
-              <Link to={"/articles"}>
-                <Button className="btn" variant="contained" size="large">
-                  See all posts
-                </Button>
-              </Link>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={12} lg={6}>
-            <Box className="sidebar">
-              <Sidebar />
-            </Box>
-          </Grid>
+      <Grid container spacing={12}>
+        <Grid item xs={12} md={12} lg={6}>
+          <Box className="homepage-articles">
+            <Typography variant="h6" className="text">
+              Recent articles
+            </Typography>
+            {articlesResponse && !isLoadingArticles && !isMobile && !isTablete && (
+              <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} isRow={true} />
+            )}
+            {isLoadingArticles && !isMobile && !isTablete && <HomepageArticlesListSkeleton isRow={true}/>}
+
+            {articlesResponse && !isLoadingArticles && isTablete && !isMobile && (
+              <ArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
+            )}
+            {isLoadingArticles && isTablete && !isMobile && <ArticlesSkeletonList />}
+
+            {articlesResponse && !isLoadingArticles && isMobile && (
+              <HomepageArticlesList articles={articlesResponse?.articles.slice(0, 3)} />
+            )}
+            {isLoadingArticles && isMobile && <HomepageArticlesListSkeleton />}
+            <Link to={"/articles"}>
+              <Button className="btn" variant="contained" size="large">
+                See all posts
+              </Button>
+            </Link>
+          </Box>
         </Grid>
-      </Box>
+        <Grid item xs={12} md={12} lg={6}>
+          <Box className="sidebar">
+            <Sidebar />
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
     </StyledHomePage>
   );
 };

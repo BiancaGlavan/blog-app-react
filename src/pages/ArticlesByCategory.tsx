@@ -3,7 +3,10 @@ import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import CategoriesList from "../components/homepage/CategoriesList";
-import { useGetArticleByIdQuery, useGetCategoriesQuery, useGetCategoryArticlesQuery } from "../redux/features/apiSlice";
+import ArticlesSkeletonList from "../components/skeletons/skeletonsComponents/ArticlesSkeletonList";
+import CategoriesListSkeleton from "../components/skeletons/skeletonsComponents/CategoriesListSkeleton";
+
+import { useGetCategoriesQuery, useGetCategoryArticlesQuery } from "../redux/features/apiSlice";
 
 const StyledArticlesByCategory = styled(Container)`
  
@@ -27,9 +30,10 @@ const ArticlesByCategory = () => {
   return (
     <StyledArticlesByCategory>
       <Box className="categories">
-        <CategoriesList activeCategoryId={id || ""} categories={categories || []}/>
+        {isLoadingCategories && <CategoriesListSkeleton />}
+        {!isLoadingCategories && categories && <CategoriesList activeCategoryId={id || ""} categories={categories || []}/>}
       </Box>
-      
+      {categoryArticlesIsLoading && <ArticlesSkeletonList/>}
         {!categoryArticlesIsLoading && !categoryArticlesIsFetching && categoryArticles && (
           <ArticlesList articles={categoryArticles.articles} />
         )}

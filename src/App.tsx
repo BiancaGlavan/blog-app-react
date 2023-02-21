@@ -15,6 +15,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SingleArticlePage from "./pages/SingleArticlePage";
 import blogTheme from "./theme/blogTheme";
 import AdminEditArticlePage from "./pages/adminPages/AdminEditArticlePage";
+import SkeletonPage from "./pages/SkeletonPage";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
             <Route path="/articles/add" element={<AddArticlePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/articles/:id" element={<SingleArticlePage />} />
+            <Route path="/skeleton" element={<SkeletonPage />} />
+            
           </Route>
           <Route path="/" element={<AdminLayout />}>
             <Route path="/admin" element={<AdminPage />} />

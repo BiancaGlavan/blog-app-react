@@ -22,18 +22,28 @@ const StyledArticle = styled("div")`
     height: 300px;
   }
 
-  .article-img {
+  .img-container {
     width: 100%;
     height: 200px;
-    object-fit: cover;
 
     &.isRow {
       width: 250px;
       height: 298px;
     }
 
-    ${(props) => props.theme.breakpoints.down('sm')} {
+    ${(props) => props.theme.breakpoints.down("sm")} {
       height: 150px;
+    }
+
+    .article-img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+
+      &.isRow {
+        width: 250px;
+        height: 298px;
+      }
     }
   }
 
@@ -45,7 +55,7 @@ const StyledArticle = styled("div")`
       width: 300px;
     }
 
-    ${(props) => props.theme.breakpoints.down('sm')} {
+    ${(props) => props.theme.breakpoints.down("sm")} {
       height: 200px;
       padding: 5px;
     }
@@ -57,7 +67,7 @@ const StyledArticle = styled("div")`
         color: ${(props) => props.theme.palette.primary.main};
       }
 
-      ${(props) => props.theme.breakpoints.down('sm')} {
+      ${(props) => props.theme.breakpoints.down("sm")} {
         font-size: 16px;
         overflow: hidden;
         line-height: 1.2rem;
@@ -79,12 +89,12 @@ const StyledArticle = styled("div")`
     gap: 10px;
     margin-bottom: 10px;
 
-    ${(props) => props.theme.breakpoints.down('sm')} {
+    ${(props) => props.theme.breakpoints.down("sm")} {
       gap: 5px;
     }
 
     .detail {
-      ${(props) => props.theme.breakpoints.down('sm')} {
+      ${(props) => props.theme.breakpoints.down("sm")} {
         font-size: 10px;
       }
     }
@@ -125,16 +135,23 @@ const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) =>
   return (
     <StyledArticle className={classNames("Article", { isRow: isRow })}>
       <Link to={`/articles/${article._id}`}>
-        <img className={classNames("article-img", { isRow: isRow })} src={article.image ? article.image : "./default-thumbnail.jpg"} />
+        <Box className="img-container">
+          <img
+            className={classNames("article-img", { isRow: isRow })}
+            src={article.image ? article.image : "./default-thumbnail.jpg"}
+          />
+        </Box>
       </Link>
       <Box className={classNames("article-content", { isRow: isRow })}>
         <Box className="article-details">
           <Typography className="user detail" variant="caption">
             by {article.user?.name}
           </Typography>
-          <Typography className="detail" variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
+          <Typography className="detail" variant="caption">
+            {article.createdAt?.slice(0, 10)}
+          </Typography>
           <Link to={`/categories/${article.category._id}/articles`}>
-          <Typography className="detail cat" >{article.category.title}</Typography>
+            <Typography className="detail cat">{article.category.title}</Typography>
           </Link>
         </Box>
         <Link to={`/articles/${article._id}`}>
@@ -142,7 +159,7 @@ const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) =>
             {article.title}
           </Typography>
         </Link>
-        <Typography className="article-desc" variant="body2" component='div'>
+        <Typography className="article-desc" variant="body2" component="div">
           {parse(article?.description)}
         </Typography>
       </Box>

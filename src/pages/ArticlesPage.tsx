@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import CategoriesList from "../components/homepage/CategoriesList";
+import ArticlesPageSkeleton from "../components/skeletons/skeletonsPages/ArticlesPageSkeleton";
 import { useGetArticlesQuery, useGetCategoriesQuery } from "../redux/features/apiSlice";
 
 const StyledArticlePage = styled(Container)`
@@ -32,14 +33,15 @@ const ArticlesPage = () => {
 
   return (
     <StyledArticlePage className="ArticlesPage">
-      <Box className="categories">
+      {isLoadingCategories && isLoading && <ArticlesPageSkeleton />}
+     {!isLoadingCategories && categories && <Box className="categories">
         <CategoriesList activeCategoryId={id || ""} categories={categories || []}/>
-      </Box>
-      <Typography className="articles-feed" variant="h5">
+      </Box>}
+      {!isLoading && articlesResponse && <><Typography className="articles-feed" variant="h5">
         The Feed
       </Typography>
 
-      {!isLoading && articlesResponse && <ArticlesList articles={articlesResponse.articles} />}
+       <ArticlesList articles={articlesResponse.articles} /></>}
     </StyledArticlePage>
   );
 };
