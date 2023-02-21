@@ -52,6 +52,7 @@ const StyledArticleSkeleton = styled("div")`
   .article-content {
     &.isRow {
       width: 700px;
+      margin-top: 30px;
     }
 
     ${(props) => props.theme.breakpoints.down("sm")} {
