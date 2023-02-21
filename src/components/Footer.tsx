@@ -1,6 +1,8 @@
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
 import Register from "./navigation/Register";
 
 const StyledFooter = styled("div")`
@@ -51,20 +53,35 @@ const StyledFooter = styled("div")`
     }
   }
 
+  .msg {
+    color: ${(props) => props.theme.palette.background.default};
+  }
+
 `;
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const authState = useAppSelector((state) => state.auth);
+  const [msg, setMsg] = useState('');
+  
+  const handleWrite = () => {
+    if(authState.isAuth && authState.user) {
+      navigate("/articles/add");
+    } else {
+      setMsg("Please login!")
+    }
+  }
   return (
     <StyledFooter>
       <Box className="footer-content">
         <Typography className="footer-title" variant="h5">
           Write articles and make this blog awesome.
         </Typography>
-        <Link to={`/articles/add`}>
-          <Button className="write-btn" variant="contained" size="large">
+        
+          <Button className="write-btn" variant="contained" size="large" onClick={handleWrite}>
             Write
           </Button>
-        </Link>
+       {!authState.isAuth && !authState.user && <Typography className="msg" variant="body1">{msg}</Typography>}
        <Box className="register">
        <Typography className="footer-register" variant="body1">
           If you don't have a user account, please
