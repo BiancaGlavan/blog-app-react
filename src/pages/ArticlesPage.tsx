@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import CategoriesList from "../components/homepage/CategoriesList";
@@ -30,6 +31,9 @@ const ArticlesPage = () => {
   const { id } = useParams();
   const {data: categories, isLoading: isLoadingCategories} = useGetCategoriesQuery();
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [id]);
 
   return (
     <StyledArticlePage className="ArticlesPage">

@@ -1,5 +1,6 @@
 import { Box, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import CategoriesList from "../components/homepage/CategoriesList";
@@ -27,6 +28,12 @@ const ArticlesByCategory = () => {
   } = useGetCategoryArticlesQuery(id || "", { skip: !id });
 
   const {data: categories, isLoading: isLoadingCategories} = useGetCategoriesQuery();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [id]);
+
+
   return (
     <StyledArticlesByCategory>
       <Box className="categories">

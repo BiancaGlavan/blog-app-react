@@ -16,9 +16,9 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IArticle, useDeleteArticleMutation, useGetArticlesQuery } from "../../redux/features/apiSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AlertComponent from "../../components/admin/AlertComponent";
 import PaginationForTable from "../../components/admin/PaginationForTable";
 
@@ -82,12 +82,12 @@ const AdminArticlesPage = () => {
     }
   };
 
-  //article id to delete
-  // 63b336b2647dd2918c3f21e1
-  // 63b337d6e6b012c6b4953cec
-  // 63b47d844c3db2538aa51217
-  // 63c16563edd4db65f58c1e14
-  // 63b339f799bfb21234c18f13
+  const { id } = useParams();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [id]);
+
 
   return (
     <StyledAdminArticlesPage>

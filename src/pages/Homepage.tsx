@@ -6,7 +6,7 @@ import HomepageArticlesList from "../components/article/HomepageArticlesList";
 import Sidebar from "../components/homepage/Sidebar";
 import CategoriesList from "../components/homepage/CategoriesList";
 import { useGetArticlesQuery, useGetCategoriesQuery } from "../redux/features/apiSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoriesListSkeleton from "../components/skeletons/skeletonsComponents/CategoriesListSkeleton";
 import HomepageArticlesListSkeleton from "../components/skeletons/skeletonsComponents/HomepageArticlesListSkeleton";
 import ArticlesSkeletonList from "../components/skeletons/skeletonsComponents/ArticlesSkeletonList";
@@ -65,6 +65,11 @@ const Homepage = () => {
     isLoading: isLoadingArticles,
     isFetching: isFetchingArticles,
   } = useGetArticlesQuery();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [id]);
+
 
   return (
     <StyledHomePage className="Homepage">

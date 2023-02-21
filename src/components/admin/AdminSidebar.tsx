@@ -7,7 +7,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { Link } from "react-router-dom";
 
 const StyledAdminSidebar = styled(Paper)`
-  width: 280px; 
+  width: 280px;
   min-height: 100vh;
   background: ${(props) => props.theme.palette.secondary.main};
 
@@ -19,7 +19,6 @@ const StyledAdminSidebar = styled(Paper)`
 
   .list-item {
     color: #fff;
-
   }
 `;
 
@@ -54,16 +53,6 @@ const AdminSidebar = () => {
                 <ArticleIcon />
               </ListItemIcon>
               <ListItemText className="list-item" primary="Articles" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link className="link" to={"/admin/users"}>
-        <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon className="list-item">
-                <AccountBoxIcon />
-              </ListItemIcon>
-              <ListItemText className="list-item" primary="Users" />
             </ListItemButton>
           </ListItem>
         </Link>

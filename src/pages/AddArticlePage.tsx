@@ -3,6 +3,8 @@ import { styled } from "@mui/material/styles";
 import { IArticlePayload, useCreateArticleMutation, useGetCategoriesQuery } from "../redux/features/apiSlice";
 import ManageArticle from "../components/article/ManageArticle";
 import NavigateBack from "../components/navigation/NavigateBack";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const StyledAddArticlePage = styled(Container)`
   margin-top: 80px;
@@ -13,6 +15,7 @@ const AddArticlePage = () => {
   const { isLoading: isLoadingCreateArticle, isSuccess: isSuccesArticle } = response;
 
   const { data: categories, isLoading } = useGetCategoriesQuery();
+  const { id } = useParams();
 
   const handleCreateArticle = (newArticle: IArticlePayload) => {
     if (isLoadingCreateArticle) {
@@ -20,6 +23,12 @@ const AddArticlePage = () => {
     }
     createArticle({ article: newArticle });
   };
+
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [id]);
+
 
   return (
     <StyledAddArticlePage className="AddArticlePage">

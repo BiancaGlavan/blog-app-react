@@ -9,6 +9,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAppSelector } from "../redux/hooks";
 import Comment from "../components/comments/Comment";
 import CommentsList from "../components/comments/CommentsList";
+import { useEffect } from "react";
 
 const StyledSingleArticlePage = styled(Container)`
   margin-top: 80px;
@@ -70,6 +71,11 @@ const SingleArticlePage = () => {
       likeArticle(article._id);
     }
   }
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [id]);
+
 
   return (
     <StyledSingleArticlePage>

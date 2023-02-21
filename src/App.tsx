@@ -6,7 +6,6 @@ import MainLayout from "./layouts/MainLayout";
 import AdminArticlesPage from "./pages/adminPages/AdminArticlesPage";
 import AdminCategoriesPage from "./pages/adminPages/AdminCategoriesPage";
 import AdminPage from "./pages/adminPages/AdminPage";
-import AdminUsersPage from "./pages/adminPages/AdminUsersPage";
 import ArticlesByCategory from "./pages/ArticlesByCategory";
 import ArticlesPage from "./pages/ArticlesPage";
 import AddArticlePage from "./pages/AddArticlePage";
@@ -40,7 +39,7 @@ function App() {
             <Route path="/admin/articles/add" element={<AddArticlePage />} />
             <Route path="/admin/articles/:id/edit" element={<AdminEditArticlePage />} />
 
-            <Route path="/admin/users" element={<AdminUsersPage />} />
+            
           </Route>
         </Routes>
       </div>
