@@ -1,132 +1,59 @@
 import { styled } from "@mui/material/styles";
-import { Box, Button, IconButton, Menu, useTheme, useMediaQuery } from "@mui/material";
-import { useGetCategoriesQuery } from "../../redux/features/apiSlice";
+import { ICategory } from "../../redux/features/apiSlice";
+import { Button } from "@mui/material";
+import classNames from "classnames";
 import { Link } from "react-router-dom";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
 
+interface IPropsCategories {
+  categories: ICategory[];
+  activeCategoryId: string;
+}
 const StyledCategories = styled("div")`
   display: flex;
+  gap: 10px;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  overflow: auto;
 
-  ${(props) => props.theme.breakpoints.down("sm")} {
-    gap: 5px;
+  ::-webkit-scrollbar {
+    height: 4px;
   }
 
-  .cat {
-    color: black;
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.palette.grey[800]};
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${(props) => props.theme.palette.grey[700]};
+  }
+
+  .category {
+    color: ${(props) => props.theme.palette.text.primary};
     font-weight: 600;
-    font-size: 15px;
 
-    ${(props) => props.theme.breakpoints.down("sm")} {
-      font-size: 14px;
-    }
-
-    &:hover {
+    &.active {
       color: ${(props) => props.theme.palette.primary.main};
     }
   }
 `;
 
-const StyledCategoryMenu = styled(Menu)`
-  .cat {
-    color: black;
-    font-weight: 600;
-    font-size: 15px;
-
-    ${(props) => props.theme.breakpoints.down("sm")} {
-      font-size: 14px;
-    }
-
-    &:hover {
-      color: ${(props) => props.theme.palette.primary.main};
-    }
-  }
-`;
-
-const Categories = () => {
-  const { data: categories, isLoading } = useGetCategoriesQuery();
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
+const Categories = ({ categories, activeCategoryId }: IPropsCategories) => {
   return (
     <StyledCategories className="Categories">
-      {categories &&
-        !isMobile &&
-        categories?.slice(0, 3).map((category) => (
-          <Link key={category._id} to={`/categories/${category._id}/articles`}>
-            <Button className="cat"> {category.title}</Button>
-          </Link>
-        ))}
-      {categories &&
-        isMobile &&
-        categories?.slice(0, 2).map((category) => (
-          <Link key={category._id} to={`/categories/${category._id}/articles`}>
-            <Button className="cat"> {category.title}</Button>
-          </Link>
-        ))}
-      {categories && categories.length > 3 && (
-        <>
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, margin: "0 10px" }}>
-              <MoreVertIcon />
-            </IconButton>
-            <StyledCategoryMenu
-              sx={{ mt: "50px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <Box
-                className="dropdown-cat"
-                sx={{
-                  padding: "10px 20px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: "10px",
-                }}
-              >
-                {!isMobile &&
-                  categories?.slice(3).map((category) => (
-                    <Link key={category._id} to={`/categories/${category._id}/articles`}>
-                      <Button className="cat"> {category.title}</Button>
-                    </Link>
-                  ))}
-                  {isMobile &&
-                  categories.slice(2).map((category) => (
-                    <Link key={category._id} to={`/categories/${category._id}/articles`}>
-                      <Button className="cat"> {category.title}</Button>
-                    </Link>
-                  ))}
-              </Box>
-            </StyledCategoryMenu>
-          </Box>
-        </>
-      )}
-    
+      {categories.map((category) => (
+        <Link to={`/categories/${category._id}/articles`} key={category._id}>
+          <Button className={classNames("category", { active: activeCategoryId === category._id })}>
+            {category.title}
+          </Button>
+        </Link>
+      ))}
     </StyledCategories>
   );
 };

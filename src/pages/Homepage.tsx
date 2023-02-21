@@ -1,11 +1,12 @@
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ArticlesList from "../components/article/ArticlesList";
 import HomepageArticlesList from "../components/article/HomepageArticlesList";
 import Sidebar from "../components/homepage/Sidebar";
 import CategoriesList from "../components/homepage/CategoriesList";
-import { useGetArticlesQuery } from "../redux/features/apiSlice";
+import { useGetArticlesQuery, useGetCategoriesQuery } from "../redux/features/apiSlice";
+import { useState } from "react";
 
 const StyledHomePage = styled("div")`
   margin-top: 80px;
@@ -13,6 +14,8 @@ const StyledHomePage = styled("div")`
   .homepage-top {
     margin-left: 20px;
     margin-right: 20px;
+    display: flex;
+    justify-content: center;
   }
 
   .middle-section {
@@ -51,6 +54,8 @@ const Homepage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablete = useMediaQuery(theme.breakpoints.down("lg"));
+  const { id } = useParams();
+  const {data: categories, isLoading: isLoadingCategories} = useGetCategoriesQuery();
 
   const {
     data: articlesResponse,
@@ -61,7 +66,7 @@ const Homepage = () => {
   return (
     <StyledHomePage className="Homepage">
       <Box className="homepage-top">
-        <CategoriesList />
+        <CategoriesList activeCategoryId={id || ""} categories={categories || []}/>
       </Box>
       <Box className="middle-section">
         <Grid container spacing={12}>
