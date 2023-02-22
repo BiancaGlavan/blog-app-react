@@ -7,15 +7,13 @@ interface IPropsArticleSkeleton {
 }
 
 const StyledArticleSkeleton = styled("div")`
-  max-width: 400px;
-   display: flex;
+  display: flex;
   flex-direction: column;
 
   &.isRow {
     flex-direction: row;
     height: 300px;
     max-width: 600px;
-    
   }
 
   .img-container {
@@ -75,7 +73,7 @@ const StyledArticleSkeleton = styled("div")`
 
 const ArticleSkeleton = ({ isRow = false }: IPropsArticleSkeleton) => {
   return (
-    <StyledArticleSkeleton  className={classNames("ArticleSkeleton", { isRow: isRow })}>
+    <StyledArticleSkeleton className={classNames("ArticleSkeleton", { isRow: isRow })}>
       <Box className="img-container">
         <Skeleton variant="rectangular" className={classNames("article-img", { isRow: isRow })} />
       </Box>

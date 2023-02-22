@@ -53,7 +53,7 @@ const Comment = () => {
   return (
     <StyledComment className="Comment">
       <Box className="comment-image-container">
-        <Avatar alt="user avatar" src="/images/homepage-middle.jpg" />
+        <Avatar alt="user avatar" src="/images/choose-photo.jpg" />
       </Box>
       <Box className="comment-right-part">
         <Box className="comment-content">
@@ -77,7 +77,7 @@ const Comment = () => {
         <Box className="replies" sx={{ display: "flex", gap: "10px" }}>
           {/* <Comment /> */}
           <Box className="comment-image-container">
-            <Avatar alt="user avatar" src="/images/homepage-middle.jpg" />
+            <Avatar alt="user avatar" src="/images/choose-photo.jpg" />
           </Box>
           <Box className="comment-right-part">
             <Box className="comment-content">
