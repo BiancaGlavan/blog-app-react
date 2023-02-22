@@ -24,7 +24,6 @@ const StyledFooter = styled("div")`
   }
 
   .write-btn {
-    width: 200px;
     border-radius: 0;
   }
 
@@ -79,7 +78,7 @@ const Footer = () => {
         </Typography>
         
           <Button className="write-btn" variant="contained" size="large" onClick={handleWrite}>
-            Write
+            Write Article
           </Button>
        {!authState.isAuth && !authState.user && <Typography className="msg" variant="body1">{msg}</Typography>}
        <Box className="register">

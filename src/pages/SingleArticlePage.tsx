@@ -35,6 +35,11 @@ const StyledSingleArticlePage = styled(Container)`
     margin-bottom: 30px;
     text-transform: uppercase;
     align-items: center;
+    flex-wrap: wrap;
+
+    // @media screen and (max-width: 350px) {
+    //   flex-wrap: wrap;
+    // }
   }
 
   .single-article-related {
@@ -90,7 +95,7 @@ const SingleArticlePage = () => {
   return (
     <StyledSingleArticlePage>
       <Grid container spacing={10}>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={8}>
           {isLoading && <SingleArticleSkeleton />}
           {!isLoading && article && (
             <>
@@ -114,7 +119,7 @@ const SingleArticlePage = () => {
           )}
         </Grid>
 
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           {categoryArticlesIsLoading && <SingleArticleRelatedSkeleton />}
           {!categoryArticlesIsLoading && categoryArticles && (
             <Typography className="single-article-related" variant="h6">
