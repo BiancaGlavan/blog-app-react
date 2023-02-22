@@ -23,7 +23,6 @@ const StyledNavigation = styled("div")`
     display: flex;
     gap: 20px;
     align-items: center;
-    
 
     .menu-link {
       font-weight: 500;
@@ -39,6 +38,11 @@ const StyledNavigation = styled("div")`
       color: ${(props) => props.theme.palette.primary.main};
     }
   }
+
+  .loader-img {
+    width: 20px;
+    
+  }
 `;
 
 const Navigation = () => {
@@ -49,7 +53,12 @@ const Navigation = () => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  const { data: userProfile, isSuccess, isError } = useGetMyProfileQuery({}, { skip: !authState.isAuth });
+  const {
+    data: userProfile,
+    isSuccess,
+    isError,
+    isLoading: isLoadingUserProfile,
+  } = useGetMyProfileQuery({}, { skip: !authState.isAuth });
 
   const navigate = useNavigate();
 
@@ -71,12 +80,10 @@ const Navigation = () => {
   }, [userProfile]);
 
   useEffect(() => {
-
     if (isError) {
       dispatch(logout());
     }
-
-  }, [isError])
+  }, [isError]);
 
   return (
     <StyledNavigation className="Navigation">
@@ -98,7 +105,7 @@ const Navigation = () => {
         <Box className="menu-links">
           {!isMobile && (
             <>
-             <Link to={"/"}>
+              <Link to={"/"}>
                 <Typography className="menu-link" variant="subtitle1">
                   Home
                 </Typography>
@@ -108,7 +115,7 @@ const Navigation = () => {
                   Articles
                 </Typography>
               </Link>
-             
+
               {!authState.isAuth && (
                 <>
                   <Login />
@@ -117,7 +124,7 @@ const Navigation = () => {
               )}
             </>
           )}
-
+          {isLoadingUserProfile && <img className="loader-img" src="../images/animated-loader.svg" />}
           {authState.isAuth && authState.user && (
             <>
               <Link to={"/articles/add"}>
@@ -127,9 +134,14 @@ const Navigation = () => {
               </Link>
             </>
           )}
-          {authState.isAuth && userProfile?.profile.role === 'admin' && <Link to={'/admin'}>
-          <Typography className="menu-link" variant="subtitle1">Admin</Typography>
-          </Link>}
+
+          {authState.isAuth && userProfile?.profile.role === "admin" && (
+            <Link to={"/admin"}>
+              <Typography className="menu-link" variant="subtitle1">
+                Admin
+              </Typography>
+            </Link>
+          )}
           {authState.isAuth && authState.user && <UserDropdown user={authState.user} handleLogout={handleLogout} />}
         </Box>
         <Drawer

@@ -25,12 +25,12 @@
 - Unsplash API
 - Redux Toolkit
 - React Router
-- Express js
-- MongoDB
-- Mongoose
 
 
 ### Backend
 
+- Express js
+- MongoDB
+- Mongoose
 - Repository: [github.com/BiancaGlavan/rest-api-blog-backend](https://github.com/BiancaGlavan/rest-api-blog-backend)
 
