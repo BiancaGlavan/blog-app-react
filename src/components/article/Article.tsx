@@ -5,6 +5,7 @@ import { baseURL } from "../../utils/config";
 import { Box, Button, Typography } from "@mui/material";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
+import FormatDate from "../../utils/FormatDate";
 
 interface IPropsArticle {
   article: IArticle;
@@ -94,6 +95,7 @@ const StyledArticle = styled("div")`
     }
 
     .detail {
+      text-transform: uppercase;
       ${(props) => props.theme.breakpoints.down("sm")} {
         font-size: 10px;
       }
@@ -147,9 +149,11 @@ const Article = ({ article, isRow = false, isMobile = false }: IPropsArticle) =>
           <Typography className="user detail" variant="caption">
             by {article.user?.name}
           </Typography>
-          <Typography className="detail" variant="caption">
-            {article.createdAt?.slice(0, 10)}
-          </Typography>
+          {article.createdAt && (
+            <Typography className="detail" variant="caption">
+              {FormatDate(article.createdAt)}
+            </Typography>
+          )}
           <Link to={`/categories/${article.category._id}/articles`}>
             <Typography className="detail cat">{article.category.title}</Typography>
           </Link>

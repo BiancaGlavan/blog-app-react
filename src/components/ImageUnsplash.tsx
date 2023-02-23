@@ -6,7 +6,6 @@ import { useGetImagesQuery } from "../redux/features/apiUnsplashSlice";
 import ImagesList from "./createArticle/ImagesList";
 import { useNavigate } from "react-router-dom";
 import useDebounce from "../utils/useDebounce";
-
 import defaultImage from '../assets/choose-photo.jpg';
 
 const StyledImageUnsplash = styled("div")`

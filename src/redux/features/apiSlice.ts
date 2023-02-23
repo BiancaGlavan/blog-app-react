@@ -74,6 +74,32 @@ interface ILikeArticleResponse {
   message: string;
 }
 
+export interface IComment {
+  _id: string;
+  text: string;
+  user: {
+    name: string;
+    image?: string;
+  };
+  article: string;
+  createdAt: string;
+}
+
+interface ICreateCommentResponse {
+  comment: IComment;
+}
+
+export interface ICommentPayload {
+  text: string;
+  article: string;
+}
+
+export interface ICommentsResponse {
+  comments: IComment[];
+  currentPage: number;
+  totalPages: number;
+}
+
 export const backendApi = createApi({
   reducerPath: "backendapi",
   baseQuery: fetchBaseQuery({
@@ -87,7 +113,7 @@ export const backendApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Profile", "Articles", "Categories", "Article"],
+  tagTypes: ["Profile", "Articles", "Categories", "Article", "Comments"],
 
   endpoints: (builder) => ({
     createArticle: builder.mutation<ICreateArticleResponse, { article: IArticlePayload }>({
@@ -109,6 +135,16 @@ export const backendApi = createApi({
         };
       },
       invalidatesTags: ["Categories"],
+    }),
+    createComment: builder.mutation<ICreateCommentResponse, { comment: ICommentPayload}>({
+      query({ comment }) {
+        return {
+          url: `comments/add`,
+          method: "POST",
+          body: comment,
+        };
+      },
+      invalidatesTags: ["Comments"],
     }),
     updateCategory: builder.mutation<ICreateCategoryResponse, { category: ICategoryPayload; id: string }>({
       query({ category, id }) {
@@ -179,13 +215,17 @@ export const backendApi = createApi({
     getArticles: builder.query<IArticlesResponse, void>({
       query: () => "articles",
       providesTags: ["Articles"],
-    }),
+    }), 
     getArticleById: builder.query<IArticle, number | string>({
       query: (articleId: number | string) => `articles/${articleId}`,
       providesTags: ["Article"]
     }),
     getCategoryArticles: builder.query<IArticlesResponse, number | string>({
       query: (categoryId: number | string) => `categories/${categoryId}/articles`,
+    }),
+    getArticleComments: builder.query<ICommentsResponse, number | string>({
+      query: ( articleId: number | string ) => `comments/article/${articleId}`,
+      providesTags: ["Comments"],
     }),
     uploadImage: builder.mutation<string, FormData>({
       query: (data) => ({
@@ -212,6 +252,8 @@ export const {
   useDeleteArticleMutation,
   useLikeArticleMutation,
   useDeleteCategoryMutation,
+  useCreateCommentMutation,
+  useGetArticleCommentsQuery,
 } = backendApi;
 
 export default backendApi;

@@ -1,10 +1,12 @@
 import { Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FormEvent, useState } from "react";
+import { ICommentPayload } from "../../redux/features/apiSlice";
 
 interface IPropsCommentForm {
-  handleSubmit: (text: string) => void;
+  onSubmit: (newComment: ICommentPayload) => void;
   submitLabel: string;
+  articleId: string;
 }
 
 const StyledCommentForm = styled("div")`
@@ -24,19 +26,29 @@ const StyledCommentForm = styled("div")`
 
 `;
 
-const CommentForm = ({ handleSubmit, submitLabel }: IPropsCommentForm) => {
+const CommentForm = ({ onSubmit, submitLabel, articleId }: IPropsCommentForm) => {
   const [text, setText] = useState("");
   const isTextareaDisabled = text.length === 0;
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    handleSubmit(text);
+  const addComment = () => {
+    const newComment: ICommentPayload = {
+      text: text,
+      article: articleId,
+    };
+    onSubmit(newComment);
+
     setText("");
+  }
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    addComment();
   };
+
 
   return (
     <StyledCommentForm className="CommentForm">
-      <form className="form-container" onSubmit={onSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
           autoComplete="off"
@@ -46,7 +58,7 @@ const CommentForm = ({ handleSubmit, submitLabel }: IPropsCommentForm) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <Button variant="contained" className="comment-form-button" disabled={isTextareaDisabled}>
+        <Button onClick={addComment} variant="contained" className="comment-form-button" disabled={isTextareaDisabled}>
           {submitLabel}
         </Button>
       
