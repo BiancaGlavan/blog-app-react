@@ -43,7 +43,7 @@ const Comment = ({comment}: IPropsComment) => {
   return (
     <StyledComment className="Comment">
       <Box className="comment-image-container">
-        <Avatar alt="user avatar" src={comment.user.image || "/images/choose-photo.jpg"} />
+        <Avatar alt="user avatar" src={comment.user.image}>{comment.user.name.slice(0, 1)}</Avatar>
       </Box>
       <Box className="comment-right-part">
         <Box className="comment-content">
