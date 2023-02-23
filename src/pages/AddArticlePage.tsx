@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const StyledAddArticlePage = styled(Container)`
-  margin-top: 80px;
+  margin-top: 20px;
 `;
 
 const AddArticlePage = () => {

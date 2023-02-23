@@ -25,7 +25,7 @@ import CommentForm from "../components/comments/CommentForm";
 import FormatDate from "../utils/FormatDate";
 
 const StyledSingleArticlePage = styled(Container)`
-  margin-top: 80px;
+  margin-top: 50px;
 
   .single-article-img {
     width: 100%;

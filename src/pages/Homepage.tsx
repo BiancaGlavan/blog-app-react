@@ -12,7 +12,7 @@ import HomepageArticlesListSkeleton from "../components/skeletons/skeletonsCompo
 import ArticlesSkeletonList from "../components/skeletons/skeletonsComponents/ArticlesSkeletonList";
 
 const StyledHomePage = styled("div")`
-  margin-top: 80px;
+  margin-top: 20px;
 
   .homepage-top {
     margin-left: 20px;

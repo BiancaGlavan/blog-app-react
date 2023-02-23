@@ -11,7 +11,7 @@ import { useGetCategoriesQuery, useGetCategoryArticlesQuery } from "../redux/fea
 
 const StyledArticlesByCategory = styled(Container)`
  
-  margin-top: 80px;
+  margin-top: 20px;
 
   .categories {
     margin-bottom: 80px;

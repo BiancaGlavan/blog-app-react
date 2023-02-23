@@ -8,7 +8,7 @@ import ArticlesPageSkeleton from "../components/skeletons/skeletonsPages/Article
 import { useGetArticlesQuery, useGetCategoriesQuery } from "../redux/features/apiSlice";
 
 const StyledArticlePage = styled(Container)`
-  margin-top: 60px;
+  margin-top: 20px;
 
   .articles-feed {
     text-align: center;
