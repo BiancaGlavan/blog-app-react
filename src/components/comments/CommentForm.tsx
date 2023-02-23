@@ -1,7 +1,8 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FormEvent, useState } from "react";
 import { ICommentPayload } from "../../redux/features/apiSlice";
+import { useAppSelector } from "../../redux/hooks";
 
 interface IPropsCommentForm {
   onSubmit: (newComment: ICommentPayload) => void;
@@ -29,6 +30,7 @@ const StyledCommentForm = styled("div")`
 const CommentForm = ({ onSubmit, submitLabel, articleId }: IPropsCommentForm) => {
   const [text, setText] = useState("");
   const isTextareaDisabled = text.length === 0;
+  const authState = useAppSelector((state) => state.auth);
 
   const addComment = () => {
     const newComment: ICommentPayload = {
@@ -57,6 +59,7 @@ const CommentForm = ({ onSubmit, submitLabel, articleId }: IPropsCommentForm) =>
           className="comment-form-textfield"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          disabled={!authState.isAuth}
         />
         <Button onClick={addComment} variant="contained" className="comment-form-button" disabled={isTextareaDisabled}>
           {submitLabel}

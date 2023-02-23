@@ -16,7 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAppSelector } from "../redux/hooks";
 import Comment from "../components/comments/Comment";
 import CommentsList from "../components/comments/CommentsList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SingleArticleSkeleton from "../components/skeletons/skeletonsComponents/SingleArticleSkeleton";
 import SingleArticleRelatedSkeleton from "../components/skeletons/skeletonsComponents/SingleArticleRelatedSkeleton";
 import CommentForm from "../components/comments/CommentForm";
@@ -73,6 +73,7 @@ const StyledSingleArticlePage = styled(Container)`
 `;
 
 const SingleArticlePage = () => {
+  const [msg, setMsg] = useState("");
   const { id } = useParams();
   const { data: article, isLoading, isFetching } = useGetArticleByIdQuery(id || "");
   const {
@@ -90,7 +91,7 @@ const SingleArticlePage = () => {
   const { isLoading: isLoadingCreateComment, isSuccess: isSuccesComment } = responseComment;
 
   const { data: articleComments, isLoading: isLoadingArticleComments } = useGetArticleCommentsQuery(id || "");
-  console.log("article Comments", articleComments);
+
 
   const handleLike = () => {
     if (article && article._id) {
@@ -162,7 +163,7 @@ const SingleArticlePage = () => {
           Comments
         </Typography>
         <Typography className="comment-form-title" variant="body1">
-          Write comment
+          {authState.isAuth ? "Write comment" : "Login to write comment"}
         </Typography>
         <CommentForm onSubmit={handleAddComment} submitLabel="Write" articleId={id || ""} />
         {articleComments?.comments && <CommentsList comments={articleComments.comments || []} />}
