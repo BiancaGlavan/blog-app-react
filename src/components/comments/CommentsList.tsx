@@ -1,30 +1,25 @@
-import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { IComment } from "../../redux/features/apiSlice";
 import Comment from "./Comment";
-import CommentForm from "./CommentForm";
 
-const StyledCommentsList = styled('div')`
-  .comments-title {
-    margin-bottom: 30px;
-  }
+interface IPropsCommentsList {
+  comments: IComment[];
+}
+
+const StyledCommentsList = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
-const CommentsList = () => {
-
-  const addComment = () => {
-
-  };
-
+const CommentsList = ({ comments }: IPropsCommentsList) => {
   return (
     <StyledCommentsList className="CommentsList">
-      <Typography className="comments-title" variant="h6">Comments</Typography>
-      <Typography className="comment-form-title" variant="body1">Write comment</Typography>
-      <CommentForm handleSubmit={addComment} submitLabel="Write"/>
-      <Box className="comments-container">
-        <Comment />
-      </Box>
+      {comments.map((comment, idx) => (
+        <Comment key={idx} comment={comment} />
+      ))}
     </StyledCommentsList>
-  )
-}
+  );
+};
 
 export default CommentsList;

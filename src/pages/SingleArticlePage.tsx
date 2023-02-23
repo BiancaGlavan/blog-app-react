@@ -2,7 +2,10 @@ import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import {
+  ICommentPayload,
+  useCreateCommentMutation,
   useGetArticleByIdQuery,
+  useGetArticleCommentsQuery,
   useGetCategoryArticlesQuery,
   useLikeArticleMutation,
 } from "../redux/features/apiSlice";
@@ -16,10 +19,11 @@ import CommentsList from "../components/comments/CommentsList";
 import { useEffect } from "react";
 import SingleArticleSkeleton from "../components/skeletons/skeletonsComponents/SingleArticleSkeleton";
 import SingleArticleRelatedSkeleton from "../components/skeletons/skeletonsComponents/SingleArticleRelatedSkeleton";
+import CommentForm from "../components/comments/CommentForm";
+import FormatDate from "../utils/FormatDate";
 
 const StyledSingleArticlePage = styled(Container)`
   margin-top: 80px;
-
 
   .single-article-img {
     width: 100%;
@@ -36,10 +40,6 @@ const StyledSingleArticlePage = styled(Container)`
     text-transform: uppercase;
     align-items: center;
     flex-wrap: wrap;
-
-    // @media screen and (max-width: 350px) {
-    //   flex-wrap: wrap;
-    // }
   }
 
   .single-article-related {
@@ -66,6 +66,10 @@ const StyledSingleArticlePage = styled(Container)`
   .comments {
     margin-top: 50px;
   }
+
+  .comments-title {
+    margin-bottom: 30px;
+  }
 `;
 
 const SingleArticlePage = () => {
@@ -82,10 +86,23 @@ const SingleArticlePage = () => {
   const [likeArticle, response] = useLikeArticleMutation();
   const { isLoading: isLoadingLike, isSuccess: isSuccessLike } = response;
 
+  const [createComment, responseComment] = useCreateCommentMutation();
+  const { isLoading: isLoadingCreateComment, isSuccess: isSuccesComment } = responseComment;
+
+  const { data: articleComments, isLoading: isLoadingArticleComments } = useGetArticleCommentsQuery(id || "");
+  console.log("article Comments", articleComments);
+
   const handleLike = () => {
     if (article && article._id) {
       likeArticle(article._id);
     }
+  };
+
+  const handleAddComment = (newComment: ICommentPayload) => {
+    if (isLoadingCreateComment) {
+      return;
+    }
+    createComment({ comment: newComment });
   };
 
   useEffect(() => {
@@ -106,11 +123,15 @@ const SingleArticlePage = () => {
               <Box className="single-article-details">
                 <Typography variant="caption">by {article?.user?.name}</Typography>
                 <Typography variant="caption">{article?.category?.title}</Typography>
-                <Typography variant="caption">{article.createdAt?.slice(0, 10)}</Typography>
+                {article.createdAt && <Typography variant="caption">{FormatDate(article.createdAt)}</Typography>}
                 <IconButton onClick={handleLike} className="icon">
                   {article.likes.includes(authState.user?._id || "") ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </IconButton>
-                <Typography variant="caption">{article.likes.length} likes</Typography>
+                {article.likes.length === 1 ? (
+                  <Typography variant="caption">{article.likes.length} like</Typography>
+                ) : (
+                  <Typography variant="caption">{article.likes.length} likes</Typography>
+                )}
               </Box>
               <Typography className="article-desc" variant="subtitle1">
                 {parse(article?.description)}
@@ -137,7 +158,14 @@ const SingleArticlePage = () => {
         </Grid>
       </Grid>
       <Box className="comments">
-      <CommentsList />
+        <Typography className="comments-title" variant="h6">
+          Comments
+        </Typography>
+        <Typography className="comment-form-title" variant="body1">
+          Write comment
+        </Typography>
+        <CommentForm onSubmit={handleAddComment} submitLabel="Write" articleId={id || ""} />
+        {articleComments?.comments && <CommentsList comments={articleComments.comments || []} />}
       </Box>
     </StyledSingleArticlePage>
   );

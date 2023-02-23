@@ -1,7 +1,11 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import CommentForm from "./CommentForm";
+import { IComment } from "../../redux/features/apiSlice";
+import FormatDate from "../../utils/FormatDate";
 
+interface IPropsComment {
+  comment: IComment;
+}
 
 const StyledComment = styled("div")`
   display: flex;
@@ -21,6 +25,10 @@ const StyledComment = styled("div")`
     .comment-author {
       font-weight: 500;
     }
+
+    .date {
+      margin-top: 4px;
+    }
   }
 
   .comment-text {
@@ -29,23 +37,23 @@ const StyledComment = styled("div")`
 
 `;
 
-const Comment = () => {
+const Comment = ({comment}: IPropsComment) => {
   
 
   return (
     <StyledComment className="Comment">
       <Box className="comment-image-container">
-        <Avatar alt="user avatar" src="/images/choose-photo.jpg" />
+        <Avatar alt="user avatar" src={comment.user.image || "/images/choose-photo.jpg"} />
       </Box>
       <Box className="comment-right-part">
         <Box className="comment-content">
           <Typography variant="body1" className="comment-author">
-            Maria
+            {comment.user.name}
           </Typography>
-          <Typography variant="caption">03-02-2023</Typography>
+          <Typography className="date" variant="caption">{FormatDate(comment.createdAt)}</Typography>
         </Box>
         <Typography variant="body2" className="comment-text">
-          This is first comment!
+          {comment.text}
         </Typography>
       </Box>
     </StyledComment>
