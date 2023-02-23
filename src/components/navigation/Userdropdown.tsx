@@ -62,7 +62,6 @@ const UserDropdown = ({ user, handleLogout }: IPropsUserDropdown) => {
 
         <MenuItem onClick={handleCloseUserMenu}>
           <Link to={"/profile"}>
-            {" "}
             <Typography variant="subtitle2" textAlign="center">
               {"Profile"}
             </Typography>

@@ -2,8 +2,10 @@ import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import {
+  IComment,
   ICommentPayload,
   useCreateCommentMutation,
+  useDeleteCommentMutation,
   useGetArticleByIdQuery,
   useGetArticleCommentsQuery,
   useGetCategoryArticlesQuery,
@@ -73,7 +75,6 @@ const StyledSingleArticlePage = styled(Container)`
 `;
 
 const SingleArticlePage = () => {
-  const [msg, setMsg] = useState("");
   const { id } = useParams();
   const { data: article, isLoading, isFetching } = useGetArticleByIdQuery(id || "");
   const {
@@ -92,6 +93,9 @@ const SingleArticlePage = () => {
 
   const { data: articleComments, isLoading: isLoadingArticleComments } = useGetArticleCommentsQuery(id || "");
 
+  const [deleteComment, deleteCommmentRes] = useDeleteCommentMutation();
+  const { isLoading: isLoadingDeleteComment, isSuccess: isSuccesDeleteComment } = deleteCommmentRes;
+
 
   const handleLike = () => {
     if (article && article._id) {
@@ -105,6 +109,14 @@ const SingleArticlePage = () => {
     }
     createComment({ comment: newComment });
   };
+
+  const handleDeleteComment = async (comment: IComment) => {
+    try {
+      await deleteComment(comment._id).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0 });
@@ -166,7 +178,7 @@ const SingleArticlePage = () => {
           {authState.isAuth ? "Write comment" : "Login to write comment"}
         </Typography>
         <CommentForm onSubmit={handleAddComment} submitLabel="Write" articleId={id || ""} />
-        {articleComments?.comments && <CommentsList comments={articleComments.comments || []} />}
+        {articleComments?.comments && <CommentsList isLoadingDeleteComment={isLoadingDeleteComment} onDelete={handleDeleteComment} comments={articleComments.comments || []} />}
       </Box>
     </StyledSingleArticlePage>
   );

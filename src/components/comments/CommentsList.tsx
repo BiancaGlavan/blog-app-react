@@ -4,6 +4,9 @@ import Comment from "./Comment";
 
 interface IPropsCommentsList {
   comments: IComment[];
+  onDelete: (comment: IComment) => void;
+  isLoadingDeleteComment: boolean;
+
 }
 
 const StyledCommentsList = styled("div")`
@@ -12,11 +15,11 @@ const StyledCommentsList = styled("div")`
   gap: 10px;
 `;
 
-const CommentsList = ({ comments }: IPropsCommentsList) => {
+const CommentsList = ({ comments, onDelete, isLoadingDeleteComment = false }: IPropsCommentsList) => {
   return (
     <StyledCommentsList className="CommentsList">
       {comments.map((comment, idx) => (
-        <Comment key={idx} comment={comment} />
+        <Comment isLoadingDeleteComment={isLoadingDeleteComment} onDelete={onDelete} key={idx} comment={comment} />
       ))}
     </StyledCommentsList>
   );

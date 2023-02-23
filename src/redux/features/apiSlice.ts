@@ -78,6 +78,7 @@ export interface IComment {
   _id: string;
   text: string;
   user: {
+    _id: string;
     name: string;
     image?: string;
   };
@@ -181,6 +182,13 @@ export const backendApi = createApi({
       }),
       invalidatesTags: ["Categories"],
     }),
+    deleteComment: builder.mutation<IComment, string>({
+      query: (commentId) => ({
+        url: `comments/${commentId}/delete`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Comments"],
+    }),
     likeArticle: builder.mutation<ILikeArticleResponse, string>({
       query( articleId ) {
         return {
@@ -254,6 +262,7 @@ export const {
   useDeleteCategoryMutation,
   useCreateCommentMutation,
   useGetArticleCommentsQuery,
+  useDeleteCommentMutation,
 } = backendApi;
 
 export default backendApi;
