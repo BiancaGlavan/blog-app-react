@@ -27,7 +27,7 @@ function App() {
             <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/categories/:id/articles" element={<ArticlesByCategory />} />
             <Route path="/articles/add" element={<AddArticlePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            {/* <Route path="/profile" element={<ProfilePage />} /> */}
             <Route path="/articles/:id" element={<SingleArticlePage />} />
             <Route path="/skeleton" element={<SkeletonPage />} />
             

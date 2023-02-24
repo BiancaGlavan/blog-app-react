@@ -26,7 +26,7 @@ const UserDropdown = ({ user, handleLogout }: IPropsUserDropdown) => {
           sx={{ width: 30, height: 30 }}
           alt="My profile"
           src={user?.image ? `https://eager-dog-tie.cyclic.app/api/images/${user.image}` : user?.name}
-        />
+        >{user.name.slice(0, 1)}</Avatar>
       </IconButton>
       <Menu
         sx={{ mt: "40px" }}
@@ -60,13 +60,13 @@ const UserDropdown = ({ user, handleLogout }: IPropsUserDropdown) => {
        </Box>
         <Divider />
 
-        <MenuItem onClick={handleCloseUserMenu}>
+        {/* <MenuItem onClick={handleCloseUserMenu}>
           <Link to={"/profile"}>
             <Typography variant="subtitle2" textAlign="center">
               {"Profile"}
             </Typography>
           </Link>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleLogout}>
           <Typography variant="subtitle2" textAlign="center">
             {"Logout"}
